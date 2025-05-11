@@ -1,16 +1,16 @@
 grammar Finance;
 
-command             : addExpense | changeCategory;
-addExpense          : CATEGORY ':' description '(' AMOUNT CURRENCY ')';
-changeCategory      : 'Change' categoryChangeList;
-categoryChangeList  : categoryChange (',' categoryChange)*;
-categoryChange      : CATEGORY '(' AMOUNT CURRENCY ')';
+command             : addExpense | changeCategory | addCategory | deleteCategory | resetCommand ;
+addExpense          : CATEGORY ':' DESCRIPTION '(' AMOUNT CURRENCY ')' ;
+changeCategory      : 'Change' categoryChange ;
+addCategory         : 'Add' categoryChange ;
+deleteCategory      : 'Delete' CATEGORY ;
+resetCommand        : 'Reset' ;
 
-// Parser rule for description (more flexible than lexer token)
-description         : ~('(' | ',' | ':')* ;
+categoryChange      : CATEGORY '(' AMOUNT CURRENCY ')' ;
 
-// Lexer tokens
-CATEGORY            : [A-Z][a-zA-Z0-9_]*;
-AMOUNT              : [0-9.]+;
-CURRENCY            : 'VND';
-WS                  : [ \t\r\n]+ -> skip;
+CATEGORY            : [A-Za-z][a-zA-Z0-9_]* ;
+DESCRIPTION         : [a-zA-Z0-9 ]+ ;
+AMOUNT              : [0-9.]+ ;
+CURRENCY            : 'VND' ;
+WS                  : [ \t\r\n]+ -> skip ;
