@@ -62,14 +62,5 @@ class FinanceListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by FinanceParser#categoryChange.
-    def enterCategoryChange(self, ctx:FinanceParser.CategoryChangeContext):
-        pass
-
-    # Exit a parse tree produced by FinanceParser#categoryChange.
-    def exitCategoryChange(self, ctx:FinanceParser.CategoryChangeContext):
-        pass
-
-
 
 del FinanceParser

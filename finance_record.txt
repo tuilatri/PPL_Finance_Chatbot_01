@@ -1,8 +1,8 @@
 Salary: 10.000.000 VND
-Not used (Salary - Total money for spending categories): 4.050.000 VND
+Not used (Salary - Total money for spending categories): 4.000.000 VND
 Spending categories:
-- Renting: 5.000.000 VND
 - Food: 950.000 VND
+- Renting: 5.000.000 VND
 
 --------------------Record Of Actions--------------------
-[2025-05-12 00:34:18] [Food] Milktea -50.000 VND (Success)
+[2025-05-13 18:25:18] [Food] Milktea -50.000 VND (Success)
