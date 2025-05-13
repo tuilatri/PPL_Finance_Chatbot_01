@@ -23,20 +23,6 @@ This repository is designed to handle the logic and grammar processing for a Fin
 
 ---
 
-## Folder Structure
-
-PPL_Finance_Chatbot_01/
-├── CompiledFiles/
-├── chatbot.py
-├── run.py
-├── Finance.g4
-├── finance_record.txt
-├── README.md
-└── idea.txt
-
-
----
-
 ## Chatbot Commands
 
 The chatbot accepts the following commands and records actions in `finance_record.txt`:
