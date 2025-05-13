@@ -6,7 +6,7 @@ DIR = os.path.dirname(__file__)
 ANTLR_JAR = 'C:\\Application\\antlr4.9.2\\antlr4-4.9.2-complete.jar'  # Update if needed
 CPL_Dest = os.path.join(DIR, 'CompiledFiles')
 SRC = os.path.join(DIR, 'Finance.g4')
-
+# "C:\\Application\\antlr4\\antlr-4.13.2-complete.jar"
 def generate():
     if not os.path.exists(ANTLR_JAR):
         print(f"Error: ANTLR JAR not found at {ANTLR_JAR}")
