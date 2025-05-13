@@ -59,10 +59,6 @@ The chatbot accepts the following commands and records actions in `finance_recor
 
 ---
 
-
-
----
-
 ## Notes
 - All commands must follow the specified format.
 - The chatbot may output parsing warnings due to the custom grammar, but will still proceed with valid commands.
