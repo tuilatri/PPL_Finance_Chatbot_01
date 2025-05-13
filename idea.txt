@@ -1,0 +1,74 @@
+Topic: Finance Chatbot
+
+1. Idea:
+- A chatbot program that can help users manage their money based on their spending categories.
+
+- From that, the chatbot analyzes the way that the user has been using their money wisely or not. It can advise users how to manage their money more efficiently.
+
+2. How the program works:
+// Beginning
+- The program greets user, like this:
++ For example: Chatbot: Hello, User. I am here to help you on your finance.
+
+//Asked for salary
+- The program asks for user's salary, like this:
++ For example: Chatbot: Your salary: ... 
+
+//Asked for spending categories
+- The program asks for user's salary, like this:
++ For example: Chatbot: Your salary: ... (User types with the format like this: 10.000.000 VND)
++ Then: Your spending categories: ... (User types with the format like this: Renting (5.000.000 VND), Food (1.000.000 VND), Clothes (1.000.000 VND), Emergency (1.000.000 VND), Savings (2.000.000 VND))
+
+//Action (Command)
+- The user takes controls from here, the program will show place that let user command:
++ For example: Command: ... (User types with the following format: Food: Milktea (50.000 VND). Explanation: Food means category, Milktea means the name of product, 50.000 VND is the price)
+
+//Check logic
+- The program checks whether the user has enough money in the specific category to do some actions
+- Like the example in //Action (Command), user purchased milktea for 50.000 VND from food category. The program checks the money that user set for Food category, if larger the price of milktea, proceed it, like this: Enough Money, Proceeding. Then, the program stores action in the finance_record.txt file. If not, decline it, like this: Insufficient Money, Declining. Then, the program stores action in the finance_record.txt file.
+
+//Change or Add or Delete Category
+- User wants to modify categories by using commands:
++ Change category if that category is existed.
+++ Format: Command: Change <Name of Category> (Money for that category). For example: Command: Change Food (1.000.000 VND)
+++ For example: Command: Change Food (1.000.000 VND). The program will change the money in food category.
+++ Check logic:
++++ When user wants to change the money in specific category. The program checks the money left (the money that user has not used after setting spending categories. For example: User has 10.000.000 VND, uses for 3 spending categories: Renting (5.000.000 VND), Food (1.000.000 VND). So, user still has 4.000.000 VND left. User changes the money for Food category. If the money smaller or equals to 4.000.000 VND, proceed it, like this: Proceeding! and records this action in finance_record.txt. If larger than 4.000.000 VND, decline it, like this: Declining! and record this action. After all, update the money left (money not used) in the finance_record.txt)
+
++ Add new category.
+++ Format: Command: Add <Name of Category> (Money for that category). For example: Command: Add Clothes (1.000.000 VND)
+++ For example: Command: Add Clothes (1.000.000 NVD). The program will add a new category.
+++ Check logic:
++++ The program checks whether the user still has enough money to add a new category. If yes, proceed it and record the action. If no, decline it and record the action. For example: User has 10.000.000 VND, uses for 3 spending categories: Renting (5.000.000 VND), Food (1.000.000 VND). So, user still has 4.000.000 VND left. User adds a new  category. If the money smaller or equals to 4.000.000 VND, proceed it, like this: Proceeding! and records this action in finance_record.txt. If larger than 4.000.000 VND, decline it, like this: Declining! and record this action. After all, update the money left (money not used) in the finance_record.txt.
+
++ Delete the existed category.
+++ Format: Command: Delete <Name of Category>. For example: Command: Delete Food
+++ For example: Command: Delete Clothes. The program will delete the specific category and update the money has not used.
+++ Check logic:
++++ When user wants to delete a category. The program proceeds, records this action and update the money has not been used. (For example: User has total money is 1.000.000 VND and 2 spending categories: Food (250.000 VND), Renting (250.000 VND). The money not used is 500.000 VND. Then, user deletes Renting (250.000 VND), so, the money not used now is 750.000 VND)
+
++ Reset.
++ Format: Command: Reset.
+++ The program resets everything and in the finance_record.txt. Then, the program starts again by greeting user.
+
+4. Text file (.txt) as finance_record.txt:
+- The text file must show the salary, spending categories at the heading of the file. Here is the format:
+
+====================Sample For Text File====================
+Salary:
+Not used (Salary - Total amount of money in the spending categories):
+Spending categories:
+--------------------Record Of Actions--------------------
+
+====================Sample For Text File====================
+
+- Note:
++ Salary: the money user input first when chatbot asks.
++ Not used: the money after user defined spending categories. 
+++ Only update after user defined spending categories. Do not update after did some actions like spending money.
+
+5. Technology:
+- A grammar file (.g4) to handle, analyze the syntax, words, tokens from words
+- A Python file to generate the antlr to make use of grammar file and to test the program (in this case, run.py)
+- A text file to record all actions
+- A Python file to handle the chatbot (in this case, chatbot.py)

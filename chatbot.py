@@ -1,290 +1,199 @@
 import os
-import re
 from antlr4 import *
-from antlr4.error.Errors import RecognitionException
-from collections import defaultdict
-from datetime import datetime
 from CompiledFiles.FinanceLexer import FinanceLexer
 from CompiledFiles.FinanceParser import FinanceParser
+from CompiledFiles.FinanceListener import FinanceListener
 
-def format_vnd(amount):
-    return f"{amount:,.0f}".replace(",", ".") + " VND"
+class FinanceChatbotListener(FinanceListener):
+    def __init__(self):
+        self.salary = 0.0
+        self.categories = {}  # {category: amount}
+        self.not_used = 0.0
+        self.record_file = "finance_record.txt"
+        self.initialize_record()
 
-def parse_command(command):
-    # Normalize spaces around VND and strip leading/trailing spaces
-    command = re.sub(r'\s*VND\s*', 'VND', command.strip())
-    input_stream = InputStream(command)
-    lexer = FinanceLexer(input_stream)
-    stream = CommonTokenStream(lexer)
-    parser = FinanceParser(stream)
-    parser.removeErrorListeners()  # Remove default console error listener
-    parser.addErrorListener(DiagnosticErrorListener())  # Detailed error reporting
-    try:
-        tree = parser.command()
-        return tree
-    except RecognitionException as e:
-        raise RecognitionException(f"Parsing failed: {str(e)}", None, input_stream, None)
+    def initialize_record(self):
+        with open(self.record_file, 'w') as f:
+            f.write("Salary: 0 VND\nNot used: 0 VND\nSpending categories: None\n")
+            f.write("--------------------Record Of Actions--------------------\n")
 
-def write_log(file_path, salary, initial_allocated, categories, display_names, actions):
-    not_used = salary - initial_allocated
-    if not_used < 0:
-        print("Warning: Negative 'Not used' detected. Check category allocations.")
-        not_used = 0
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.write(f"Salary: {format_vnd(salary)}\n")
-        f.write(f"Not used (Salary - Total money for spending categories): {format_vnd(not_used)}\n")
-        f.write("Spending categories:\n")
-        if not categories:
-            f.write("(None)\n")
+    def update_record(self, action, status):
+        with open(self.record_file, 'a') as f:
+            f.write(f"{action} - {status}\n")
+        self.write_header()
+
+    def write_header(self):
+        categories_str = ", ".join(f"{cat} ({self.format_currency(amt)} VND)" for cat, amt in self.categories.items())
+        if not categories_str:
+            categories_str = "None"
+        with open(self.record_file, 'r') as f:
+            lines = f.readlines()
+        lines[0] = f"Salary: {self.format_currency(self.salary)} VND\n"
+        lines[1] = f"Not used: {self.format_currency(self.not_used)} VND\n"
+        lines[2] = f"Spending categories: {categories_str}\n"
+        with open(self.record_file, 'w') as f:
+            f.writelines(lines)
+
+    def format_currency(self, amount):
+        # Convert float to string with dots (e.g., 10000000 -> 10.000.000)
+        parts = f"{int(amount)}"[::-1]
+        formatted = ".".join(parts[i:i+3] for i in range(0, len(parts), 3))[::-1]
+        return formatted
+
+    def parse_currency(self, number_text):
+        # Convert string like '10.000.000' to float
+        return float(number_text.replace('.', ''))
+
+    def enterSalaryInput(self, ctx):
+        self.salary = self.parse_currency(ctx.NUMBER().getText())
+        self.not_used = self.salary
+        self.update_record(f"Set salary to {self.format_currency(self.salary)} VND", "Proceeding")
+        print(f"Salary set to {self.format_currency(self.salary)} VND")
+
+    def enterCategoriesInput(self, ctx):
+        total_category_amount = 0.0
+        new_categories = {}
+        for cat_ctx in ctx.category():
+            cat_name = cat_ctx.ID().getText()
+            amount = self.parse_currency(cat_ctx.NUMBER().getText())
+            if cat_name in new_categories or cat_name in self.categories:
+                print(f"Declining: Category {cat_name} already exists")
+                self.update_record(f"Add category {cat_name} ({self.format_currency(amount)} VND)", "Declining")
+                continue
+            new_categories[cat_name] = amount
+            total_category_amount += amount
+
+        if total_category_amount <= self.not_used:
+            self.categories.update(new_categories)
+            self.not_used -= total_category_amount
+            for cat_name, amount in new_categories.items():
+                print(f"Added category {cat_name} ({self.format_currency(amount)} VND)")
+                self.update_record(f"Add category {cat_name} ({self.format_currency(amount)} VND)", "Proceeding")
         else:
-            for k in sorted(categories.keys()):
-                f.write(f"- {display_names.get(k, k)}: {format_vnd(categories[k])}\n")
-        f.write("\n--------------------Record Of Actions--------------------\n")
-        for action in actions:
-            f.write(action + "\n")
+            print("Declining: Insufficient funds for categories")
+            self.update_record(f"Add categories", "Declining")
+        self.write_header()
 
-def validate_vnd_format(value, field="amount"):
-    if not re.match(r'^\d+(\.\d{3})*(\s*VND)?$', value.strip()):
-        print(f"Invalid {field} format. Use e.g., 1.000.000 VND.")
-        return False
-    return True
+    def enterSpendCommand(self, ctx):
+        cat_name = ctx.ID(0).getText()
+        item = ctx.ID(1).getText()
+        amount = self.parse_currency(ctx.NUMBER().getText())
+        if cat_name in self.categories and self.categories[cat_name] >= amount:
+            self.categories[cat_name] -= amount
+            print("Enough Money, Proceeding")
+            self.update_record(f"{cat_name}: {item} ({self.format_currency(amount)} VND)", "Proceeding")
+        else:
+            print("Insufficient Money, Declining")
+            self.update_record(f"{cat_name}: {item} ({self.format_currency(amount)} VND)", "Declining")
+        self.write_header()
 
-def parse_vnd(value):
-    return int(value.replace(".", "").replace("VND", "").strip())
+    def enterChangeCommand(self, ctx):
+        cat_name = ctx.ID().getText()
+        new_amount = self.parse_currency(ctx.NUMBER().getText())
+        if cat_name in self.categories:
+            current_amount = self.categories[cat_name]
+            delta = new_amount - current_amount
+            if delta <= self.not_used:
+                self.categories[cat_name] = new_amount
+                self.not_used -= delta
+                print("Proceeding!")
+                self.update_record(f"Change {cat_name} ({self.format_currency(new_amount)} VND)", "Proceeding")
+            else:
+                print("Declining: Insufficient funds")
+                self.update_record(f"Change {cat_name} ({self.format_currency(new_amount)} VND)", "Declining")
+        else:
+            print(f"Declining: Category {cat_name} does not exist")
+            self.update_record(f"Change {cat_name} ({self.format_currency(new_amount)} VND)", "Declining")
+        self.write_header()
 
-def reset_data():
-    print("Resetting all data...")
-    while True:
-        salary_input = input("Your new salary: ")
-        if not validate_vnd_format(salary_input, "salary"):
-            continue
-        salary = parse_vnd(salary_input)
-        if salary <= 0:
-            print("Error: Salary must be positive.")
-            continue
-        break
+    def enterAddCommand(self, ctx):
+        cat_name = ctx.ID().getText()
+        amount = self.parse_currency(ctx.NUMBER().getText())
+        if cat_name not in self.categories and amount <= self.not_used:
+            self.categories[cat_name] = amount
+            self.not_used -= amount
+            print("Proceeding!")
+            self.update_record(f"Add {cat_name} ({self.format_currency(amount)} VND)", "Proceeding")
+        else:
+            print("Declining: Category exists or insufficient funds")
+            self.update_record(f"Add {cat_name} ({self.format_currency(amount)} VND)", "Declining")
+        self.write_header()
 
-    print("Your new spending categories (e.g., Renting (5.000.000 VND), Food (1.000.000 VND), ...):")
-    categories = defaultdict(float)
-    display_names = {}
-    while True:
-        raw_categories = input("> ")
-        if not raw_categories.strip():
-            print("Error: At least one category required.")
-            continue
-        valid = True
-        categories.clear()
-        display_names.clear()
-        matches = re.findall(r'([A-Za-z][A-Za-z0-9_]*)\s*\(([\d.]+)\s*VND\)', raw_categories, re.IGNORECASE)
-        if not matches:
-            print("Error: No valid categories found. Use format: Renting (5.000.000 VND), Food (1.000.000 VND)")
-            continue
-        for cat, amt in matches:
-            if cat.lower() in ['change', 'add', 'delete', 'reset']:
-                print(f"Error: Category name '{cat}' is a reserved keyword.")
-                valid = False
-                break
-            if not re.match(r'^\d+(\.\d{3})*$', amt):
-                print(f"Invalid amount format for {cat}. Use e.g., 1.000.000.")
-                valid = False
-                break
-            amount = parse_vnd(amt + "VND")
-            if amount <= 0:
-                print(f"Error: Amount for {cat} must be positive.")
-                valid = False
-                break
-            categories[cat.lower()] = amount
-            display_names[cat.lower()] = cat
-        if not valid:
-            continue
-        total_allocated = sum(categories.values())
-        if total_allocated > salary:
-            print("Error: Total category allocation exceeds salary.")
-            continue
-        break
+    def enterDeleteCommand(self, ctx):
+        cat_name = ctx.ID().getText()
+        if cat_name in self.categories:
+            self.not_used += self.categories[cat_name]
+            del self.categories[cat_name]
+            print("Proceeding!")
+            self.update_record(f"Delete {cat_name}", "Proceeding")
+        else:
+            print(f"Declining: Category {cat_name} does not exist")
+            self.update_record(f"Delete {cat_name}", "Declining")
+        self.write_header()
 
-    actions = []
-    initial_allocated = total_allocated
-    print(f"DEBUG: Categories defined: {list(display_names.values())}")
-    write_log("finance_record.txt", salary, initial_allocated, categories, display_names, actions)
-    print("Reset complete and saved.")
-    return salary, initial_allocated, categories, display_names, actions
+    def enterResetCommand(self, ctx):
+        self.salary = 0.0
+        self.categories = {}
+        self.not_used = 0.0
+        self.initialize_record()
+        print("Reset successful!")
+        self.update_record("Reset", "Proceeding")
 
 def main():
-    print("Chatbot: Hello, User. I am here to help you on your finance.")
-    while True:
-        salary_input = input("Your salary: ")
-        if not validate_vnd_format(salary_input, "salary"):
-            continue
-        salary = parse_vnd(salary_input)
-        if salary <= 0:
-            print("Error: Salary must be positive.")
-            continue
-        break
-
-    print("Your new spending categories (e.g., Renting (5.000.000 VND), Food (1.000.000 VND), ...):")
-    categories = defaultdict(float)
-    display_names = {}
-    while True:
-        raw_categories = input("> ")
-        if not raw_categories.strip():
-            print("Error: At least one category required.")
-            continue
-        valid = True
-        categories.clear()
-        display_names.clear()
-        matches = re.findall(r'([A-Za-z][A-Za-z0-9_]*)\s*\(([\d.]+)\s*VND\)', raw_categories, re.IGNORECASE)
-        if not matches:
-            print("Error: No valid categories found. Use format: Renting (5.000.000 VND), Food (1.000.000 VND)")
-            continue
-        for cat, amt in matches:
-            if cat.lower() in ['change', 'add', 'delete', 'reset']:
-                print(f"Error: Category name '{cat}' is a reserved keyword.")
-                valid = False
-                break
-            if not re.match(r'^\d+(\.\d{3})*$', amt):
-                print(f"Invalid amount format for {cat}. Use e.g., 1.000.000.")
-                valid = False
-                break
-            amount = parse_vnd(amt + "VND")
-            if amount <= 0:
-                print(f"Error: Amount for {cat} must be positive.")
-                valid = False
-                break
-            categories[cat.lower()] = amount
-            display_names[cat.lower()] = cat
-        if not valid:
-            continue
-        total_allocated = sum(categories.values())
-        if total_allocated > salary:
-            print("Error: Total category allocation exceeds salary.")
-            continue
-        break
-
-    actions = []
-    initial_allocated = total_allocated
-    file_path = "finance_record.txt"
-    print(f"DEBUG: Categories defined: {list(display_names.values())}")
-    write_log(file_path, salary, initial_allocated, categories, display_names, actions)
+    print("Hello, User. I am here to help you on your finance.")
+    listener = FinanceChatbotListener()
 
     while True:
-        cmd = input("Command: ")
-        if cmd.lower() in ['exit', 'quit']:
-            break
-
         try:
-            print(f"DEBUG: Processing command: {cmd}")
-            print(f"DEBUG: Current categories: {list(display_names.values())}")
-            tree = parse_command(cmd)
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-            if hasattr(tree, 'addExpense') and tree.addExpense():
-                cat = tree.addExpense().CATEGORY().getText().lower()
-                desc = tree.addExpense().DESCRIPTION().getText().strip()
-                amt_text = tree.addExpense().AMOUNT().getText()
-                if not re.match(r'^\d+(\.\d{3})*$', amt_text):
-                    print("Invalid amount format. Use e.g., 50.000.")
-                    continue
-                amt = float(amt_text.replace(".", ""))
-                if amt <= 0:
-                    print("Error: Expense amount must be positive.")
-                    continue
-
-                print(f"DEBUG: Checking category {cat} with balance {categories.get(cat, 0)}")
-                if cat in categories and categories[cat] >= amt:
-                    categories[cat] -= amt
-                    action_msg = f"[{timestamp}] [{display_names.get(cat, cat)}] {desc} -{format_vnd(amt)} (Success)"
-                    actions.append(action_msg)
-                    print("Enough money. Proceeding.")
-                else:
-                    action_msg = f"[{timestamp}] [{display_names.get(cat, cat)}] {desc} -{format_vnd(amt)} (Insufficient)"
-                    actions.append(action_msg)
-                    print(f"Insufficient money in {display_names.get(cat, cat)}. Declining.")
-
-            elif hasattr(tree, 'changeCategory') and tree.changeCategory():
-                cat = tree.changeCategory().CATEGORY().getText().lower()
-                amt_text = tree.changeCategory().AMOUNT().getText()
-                if not re.match(r'^\d+(\.\d{3})*$', amt_text):
-                    print("Invalid amount format. Use e.g., 1.000.000.")
-                    continue
-                new_amt = float(amt_text.replace(".", ""))
-                if new_amt <= 0:
-                    print("Error: Category amount must be positive.")
-                    continue
-
-                total_allocated = sum(categories.values())
-                current_used = salary - total_allocated
-                available_funds = current_used + categories.get(cat, 0)
-
-                print(f"DEBUG: Changing {cat} to {new_amt}. Available funds: {available_funds}")
-                if new_amt <= available_funds:
-                    old_amt = categories.get(cat, 0)
-                    categories[cat] = new_amt
-                    initial_allocated += new_amt - old_amt
-                    action_msg = f"[{timestamp}] [Change] {display_names.get(cat, cat)}: {format_vnd(old_amt)} → {format_vnd(new_amt)}"
-                    actions.append(action_msg)
-                    print("Proceeding!")
-                else:
-                    action_msg = f"[{timestamp}] [Change Failed] {display_names.get(cat, cat)} → {format_vnd(new_amt)} (Insufficient funds)"
-                    actions.append(action_msg)
-                    print("Declining! Not enough funds.")
-
-            elif hasattr(tree, 'addCategory') and tree.addCategory():
-                cat = tree.addCategory().CATEGORY().getText()
-                cat_lower = cat.lower()
-                amt_text = tree.addCategory().AMOUNT().getText()
-                if not re.match(r'^\d+(\.\d{3})*$', amt_text):
-                    print("Invalid amount format. Use e.g., 1.000.000.")
-                    continue
-                new_amt = float(amt_text.replace(".", ""))
-                if new_amt <= 0:
-                    print("Error: Category amount must be positive.")
-                    continue
-
-                total_allocated = sum(categories.values())
-                current_used = salary - total_allocated
-
-                print(f"DEBUG: Adding {cat} with {new_amt}. Available funds: {current_used}")
-                if new_amt <= current_used and cat_lower not in categories:
-                    categories[cat_lower] = new_amt
-                    display_names[cat_lower] = cat
-                    initial_allocated += new_amt
-                    action_msg = f"[{timestamp}] [Add] {cat}: {format_vnd(new_amt)}"
-                    actions.append(action_msg)
-                    print("Proceeding!")
-                else:
-                    reason = "Category already exists" if cat_lower in categories else "Insufficient funds"
-                    action_msg = f"[{timestamp}] [Add Failed] {cat}: {format_vnd(new_amt)} ({reason})"
-                    actions.append(action_msg)
-                    print(f"Declining! {reason}.")
-
-            elif hasattr(tree, 'deleteCategory') and tree.deleteCategory():
-                cat = tree.deleteCategory().CATEGORY().getText().lower()
-                print(f"DEBUG: Deleting {cat}")
-                if cat in categories:
-                    deleted_amt = categories[cat]
-                    initial_allocated -= deleted_amt
-                    display_name = display_names.get(cat, cat)
-                    del categories[cat]
-                    del display_names[cat]
-                    action_msg = f"[{timestamp}] [Delete] {display_name} (Freed {format_vnd(deleted_amt)})"
-                    actions.append(action_msg)
-                    print(f"Deleted {display_name} category. Freed {format_vnd(deleted_amt)}.")
-                else:
-                    action_msg = f"[{timestamp}] [Delete Failed] {cat} (Category not found)"
-                    actions.append(action_msg)
-                    print(f"Category {cat} not found.")
-
-            elif hasattr(tree, 'resetCommand') and tree.resetCommand():
-                salary, initial_allocated, categories, display_names, actions = reset_data()
-
-        except RecognitionException as e:
-            print(f"Invalid command syntax: {str(e)}. Expected formats: Food: Item (50.000 VND), Change Food (1.000.000 VND), Add Clothes (1.000.000 VND), Delete Food, Reset")
+            print("Your salary (e.g., 10.000.000 VND): ", end="")
+            salary_input = input().strip()
+            if salary_input.lower() == "exit":
+                break
+            lexer = FinanceLexer(InputStream(salary_input))
+            stream = CommonTokenStream(lexer)
+            parser = FinanceParser(stream)
+            tree = parser.salaryInput()
+            walker = ParseTreeWalker()
+            walker.walk(listener, tree)
+            break
         except Exception as e:
-            print(f"Unexpected error: {e}. Please check command syntax.")
+            print(f"Invalid input. Please use format like '10.000.000 VND'. Error: {e}")
 
-        write_log(file_path, salary, initial_allocated, categories, display_names, actions)
-        print("Update recorded.")
+    if listener.salary == 0.0:
+        print("No salary set. Exiting.")
+        return
 
-if __name__ == '__main__':
+    while True:
+        try:
+            print("Your spending categories (e.g., Renting (5.000.000 VND), Food (1.000.000 VND)): ", end="")
+            categories_input = input().strip()
+            if categories_input.lower() == "exit":
+                break
+            lexer = FinanceLexer(InputStream(categories_input))
+            stream = CommonTokenStream(lexer)
+            parser = FinanceParser(stream)
+            tree = parser.categoriesInput()
+            walker = ParseTreeWalker()
+            walker.walk(listener, tree)
+            break
+        except Exception as e:
+            print(f"Invalid input. Please use format like 'Renting (5.000.000 VND), Food (1.000.000 VND)'. Error: {e}")
+
+    while True:
+        print("Command (e.g., Food: Milktea (50.000 VND), Change Food (1.000.000 VND), Add Clothes (1.000.000 VND), Delete Food, Reset, or exit): ", end="")
+        command = input().strip()
+        if command.lower() == "exit":
+            break
+        try:
+            lexer = FinanceLexer(InputStream(command))
+            stream = CommonTokenStream(lexer)
+            parser = FinanceParser(stream)
+            tree = parser.command()
+            walker = ParseTreeWalker()
+            walker.walk(listener, tree)
+        except Exception as e:
+            print(f"Invalid command. Please use correct format. Error: {e}")
+            listener.update_record(command, "Declining")
+
+if __name__ == "__main__":
     main()

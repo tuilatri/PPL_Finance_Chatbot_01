@@ -1,18 +1,29 @@
 grammar Finance;
 
-command             : addExpense | changeCategory | addCategory | deleteCategory | resetCommand ;
-addExpense          : CATEGORY ':' DESCRIPTION '(' AMOUNT CURRENCY ')' ;
-changeCategory      : CHANGE CATEGORY '(' AMOUNT CURRENCY ')' ;
-addCategory         : ADD CATEGORY '(' AMOUNT CURRENCY ')' ;
-deleteCategory      : DELETE CATEGORY ;
-resetCommand        : RESET ;
+// Parser rules
+program: (command | input)+ EOF;
 
-CHANGE              : 'Change' ; // Keyword for changing category
-ADD                 : 'Add' ;    // Keyword for adding category
-DELETE              : 'Delete' ; // Keyword for deleting category
-RESET               : 'Reset' ;  // Keyword for resetting data
-CATEGORY            : [A-Za-z][a-zA-Z0-9_]* ; // Category names like Food, Renting
-DESCRIPTION         : [a-zA-Z0-9 ]+ ;        // Descriptions like Milktea, New Shoes
-AMOUNT              : [0-9]+ ('.' [0-9][0-9][0-9])* ; // Strict VND format: 50.000, 1.000.000
-CURRENCY            : 'VND' ;                 // Currency token
-WS                  : [ \t\r\n]+ -> skip ;    // Skip whitespace
+input: salaryInput | categoriesInput;
+
+salaryInput: NUMBER 'VND';
+
+categoriesInput: category (',' category)*;
+category: ID '(' NUMBER 'VND' ')';
+
+command: spendCommand | changeCommand | addCommand | deleteCommand | resetCommand;
+
+spendCommand: ID ':' ID '(' NUMBER 'VND' ')';
+changeCommand: 'Change' ID '(' NUMBER 'VND' ')';
+addCommand: 'Add' ID '(' NUMBER 'VND' ')';
+deleteCommand: 'Delete' ID;
+resetCommand: 'Reset';
+
+// Lexer rules
+ID: [a-zA-Z][a-zA-Z0-9]*; // Category or item names (start with letter, then letters or digits)
+NUMBER: [0-9]+ ('.' [0-9]+)*; // Numbers like 10.000.000
+VND: 'VND';
+COLON: ':';
+LPAREN: '(';
+RPAREN: ')';
+COMMA: ',';
+WS: [ \t\r\n]+ -> skip; // Ignore whitespace
