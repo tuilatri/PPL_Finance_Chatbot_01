@@ -17,12 +17,12 @@ class FinanceListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by FinanceParser#input.
-    def enterInput(self, ctx:FinanceParser.InputContext):
+    # Enter a parse tree produced by FinanceParser#userInput.
+    def enterUserInput(self, ctx:FinanceParser.UserInputContext):
         pass
 
-    # Exit a parse tree produced by FinanceParser#input.
-    def exitInput(self, ctx:FinanceParser.InputContext):
+    # Exit a parse tree produced by FinanceParser#userInput.
+    def exitUserInput(self, ctx:FinanceParser.UserInputContext):
         pass
 
 
