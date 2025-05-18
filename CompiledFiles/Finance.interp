@@ -30,7 +30,7 @@ WS
 
 rule names:
 program
-input
+userInput
 salaryInput
 categoriesInput
 category

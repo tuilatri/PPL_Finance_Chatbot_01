@@ -60,7 +60,7 @@ class FinanceParser ( Parser ):
                       "RPAREN", "COMMA", "WS" ]
 
     RULE_program = 0
-    RULE_input = 1
+    RULE_userInput = 1
     RULE_salaryInput = 2
     RULE_categoriesInput = 3
     RULE_category = 4
@@ -71,7 +71,7 @@ class FinanceParser ( Parser ):
     RULE_deleteCommand = 9
     RULE_resetCommand = 10
 
-    ruleNames =  [ "program", "input", "salaryInput", "categoriesInput", 
+    ruleNames =  [ "program", "userInput", "salaryInput", "categoriesInput", 
                    "category", "command", "spendCommand", "changeCommand", 
                    "addCommand", "deleteCommand", "resetCommand" ]
 
@@ -115,11 +115,11 @@ class FinanceParser ( Parser ):
                 return self.getTypedRuleContext(FinanceParser.CommandContext,i)
 
 
-        def input(self, i:int=None):
+        def userInput(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(FinanceParser.InputContext)
+                return self.getTypedRuleContexts(FinanceParser.UserInputContext)
             else:
-                return self.getTypedRuleContext(FinanceParser.InputContext,i)
+                return self.getTypedRuleContext(FinanceParser.UserInputContext,i)
 
 
         def getRuleIndex(self):
@@ -157,7 +157,7 @@ class FinanceParser ( Parser ):
 
                 elif la_ == 2:
                     self.state = 23
-                    self.input()
+                    self.userInput()
                     pass
 
 
@@ -178,7 +178,7 @@ class FinanceParser ( Parser ):
         return localctx
 
 
-    class InputContext(ParserRuleContext):
+    class UserInputContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -194,23 +194,23 @@ class FinanceParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return FinanceParser.RULE_input
+            return FinanceParser.RULE_userInput
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterInput" ):
-                listener.enterInput(self)
+            if hasattr( listener, "enterUserInput" ):
+                listener.enterUserInput(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitInput" ):
-                listener.exitInput(self)
+            if hasattr( listener, "exitUserInput" ):
+                listener.exitUserInput(self)
 
 
 
 
-    def input(self):
+    def userInput(self):
 
-        localctx = FinanceParser.InputContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 2, self.RULE_input)
+        localctx = FinanceParser.UserInputContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 2, self.RULE_userInput)
         try:
             self.state = 32
             self._errHandler.sync(self)

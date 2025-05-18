@@ -1,9 +1,9 @@
 grammar Finance;
 
 // Parser rules
-program: (command | input)+ EOF;
+program: (command | userInput)+ EOF;
 
-input: salaryInput | categoriesInput;
+userInput: salaryInput | categoriesInput;
 
 salaryInput: NUMBER 'VND';
 
