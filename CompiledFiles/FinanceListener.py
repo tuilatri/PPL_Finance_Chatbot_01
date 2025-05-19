@@ -1,4 +1,4 @@
-# Generated from D:\PPL_Finance_Chatbot_01\Finance.g4 by ANTLR 4.9.2
+# Generated from D:\Studying_Materials\Dai_Hoc_Quoc_Te\Studying\Year_03_2425\Semester_02_2425\Principles_Of_Programming_Languages\Projects\Draft_06\Finance.g4 by ANTLR 4.9.2
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .FinanceParser import FinanceParser
@@ -8,39 +8,102 @@ else:
 # This class defines a complete listener for a parse tree produced by FinanceParser.
 class FinanceListener(ParseTreeListener):
 
-    # Enter a parse tree produced by FinanceParser#program.
-    def enterProgram(self, ctx:FinanceParser.ProgramContext):
+    # Enter a parse tree produced by FinanceParser#start.
+    def enterStart(self, ctx:FinanceParser.StartContext):
         pass
 
-    # Exit a parse tree produced by FinanceParser#program.
-    def exitProgram(self, ctx:FinanceParser.ProgramContext):
-        pass
-
-
-    # Enter a parse tree produced by FinanceParser#userInput.
-    def enterUserInput(self, ctx:FinanceParser.UserInputContext):
-        pass
-
-    # Exit a parse tree produced by FinanceParser#userInput.
-    def exitUserInput(self, ctx:FinanceParser.UserInputContext):
+    # Exit a parse tree produced by FinanceParser#start.
+    def exitStart(self, ctx:FinanceParser.StartContext):
         pass
 
 
-    # Enter a parse tree produced by FinanceParser#salaryInput.
-    def enterSalaryInput(self, ctx:FinanceParser.SalaryInputContext):
+    # Enter a parse tree produced by FinanceParser#statement.
+    def enterStatement(self, ctx:FinanceParser.StatementContext):
         pass
 
-    # Exit a parse tree produced by FinanceParser#salaryInput.
-    def exitSalaryInput(self, ctx:FinanceParser.SalaryInputContext):
+    # Exit a parse tree produced by FinanceParser#statement.
+    def exitStatement(self, ctx:FinanceParser.StatementContext):
         pass
 
 
-    # Enter a parse tree produced by FinanceParser#categoriesInput.
-    def enterCategoriesInput(self, ctx:FinanceParser.CategoriesInputContext):
+    # Enter a parse tree produced by FinanceParser#salaryStmt.
+    def enterSalaryStmt(self, ctx:FinanceParser.SalaryStmtContext):
         pass
 
-    # Exit a parse tree produced by FinanceParser#categoriesInput.
-    def exitCategoriesInput(self, ctx:FinanceParser.CategoriesInputContext):
+    # Exit a parse tree produced by FinanceParser#salaryStmt.
+    def exitSalaryStmt(self, ctx:FinanceParser.SalaryStmtContext):
+        pass
+
+
+    # Enter a parse tree produced by FinanceParser#categoryStmt.
+    def enterCategoryStmt(self, ctx:FinanceParser.CategoryStmtContext):
+        pass
+
+    # Exit a parse tree produced by FinanceParser#categoryStmt.
+    def exitCategoryStmt(self, ctx:FinanceParser.CategoryStmtContext):
+        pass
+
+
+    # Enter a parse tree produced by FinanceParser#spendStmt.
+    def enterSpendStmt(self, ctx:FinanceParser.SpendStmtContext):
+        pass
+
+    # Exit a parse tree produced by FinanceParser#spendStmt.
+    def exitSpendStmt(self, ctx:FinanceParser.SpendStmtContext):
+        pass
+
+
+    # Enter a parse tree produced by FinanceParser#modifyCategoryStmt.
+    def enterModifyCategoryStmt(self, ctx:FinanceParser.ModifyCategoryStmtContext):
+        pass
+
+    # Exit a parse tree produced by FinanceParser#modifyCategoryStmt.
+    def exitModifyCategoryStmt(self, ctx:FinanceParser.ModifyCategoryStmtContext):
+        pass
+
+
+    # Enter a parse tree produced by FinanceParser#deleteCategoryStmt.
+    def enterDeleteCategoryStmt(self, ctx:FinanceParser.DeleteCategoryStmtContext):
+        pass
+
+    # Exit a parse tree produced by FinanceParser#deleteCategoryStmt.
+    def exitDeleteCategoryStmt(self, ctx:FinanceParser.DeleteCategoryStmtContext):
+        pass
+
+
+    # Enter a parse tree produced by FinanceParser#resetStmt.
+    def enterResetStmt(self, ctx:FinanceParser.ResetStmtContext):
+        pass
+
+    # Exit a parse tree produced by FinanceParser#resetStmt.
+    def exitResetStmt(self, ctx:FinanceParser.ResetStmtContext):
+        pass
+
+
+    # Enter a parse tree produced by FinanceParser#categoryList.
+    def enterCategoryList(self, ctx:FinanceParser.CategoryListContext):
+        pass
+
+    # Exit a parse tree produced by FinanceParser#categoryList.
+    def exitCategoryList(self, ctx:FinanceParser.CategoryListContext):
+        pass
+
+
+    # Enter a parse tree produced by FinanceParser#categoryItem.
+    def enterCategoryItem(self, ctx:FinanceParser.CategoryItemContext):
+        pass
+
+    # Exit a parse tree produced by FinanceParser#categoryItem.
+    def exitCategoryItem(self, ctx:FinanceParser.CategoryItemContext):
+        pass
+
+
+    # Enter a parse tree produced by FinanceParser#amount.
+    def enterAmount(self, ctx:FinanceParser.AmountContext):
+        pass
+
+    # Exit a parse tree produced by FinanceParser#amount.
+    def exitAmount(self, ctx:FinanceParser.AmountContext):
         pass
 
 
@@ -53,57 +116,12 @@ class FinanceListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by FinanceParser#command.
-    def enterCommand(self, ctx:FinanceParser.CommandContext):
+    # Enter a parse tree produced by FinanceParser#item.
+    def enterItem(self, ctx:FinanceParser.ItemContext):
         pass
 
-    # Exit a parse tree produced by FinanceParser#command.
-    def exitCommand(self, ctx:FinanceParser.CommandContext):
-        pass
-
-
-    # Enter a parse tree produced by FinanceParser#spendCommand.
-    def enterSpendCommand(self, ctx:FinanceParser.SpendCommandContext):
-        pass
-
-    # Exit a parse tree produced by FinanceParser#spendCommand.
-    def exitSpendCommand(self, ctx:FinanceParser.SpendCommandContext):
-        pass
-
-
-    # Enter a parse tree produced by FinanceParser#changeCommand.
-    def enterChangeCommand(self, ctx:FinanceParser.ChangeCommandContext):
-        pass
-
-    # Exit a parse tree produced by FinanceParser#changeCommand.
-    def exitChangeCommand(self, ctx:FinanceParser.ChangeCommandContext):
-        pass
-
-
-    # Enter a parse tree produced by FinanceParser#addCommand.
-    def enterAddCommand(self, ctx:FinanceParser.AddCommandContext):
-        pass
-
-    # Exit a parse tree produced by FinanceParser#addCommand.
-    def exitAddCommand(self, ctx:FinanceParser.AddCommandContext):
-        pass
-
-
-    # Enter a parse tree produced by FinanceParser#deleteCommand.
-    def enterDeleteCommand(self, ctx:FinanceParser.DeleteCommandContext):
-        pass
-
-    # Exit a parse tree produced by FinanceParser#deleteCommand.
-    def exitDeleteCommand(self, ctx:FinanceParser.DeleteCommandContext):
-        pass
-
-
-    # Enter a parse tree produced by FinanceParser#resetCommand.
-    def enterResetCommand(self, ctx:FinanceParser.ResetCommandContext):
-        pass
-
-    # Exit a parse tree produced by FinanceParser#resetCommand.
-    def exitResetCommand(self, ctx:FinanceParser.ResetCommandContext):
+    # Exit a parse tree produced by FinanceParser#item.
+    def exitItem(self, ctx:FinanceParser.ItemContext):
         pass
 
 
