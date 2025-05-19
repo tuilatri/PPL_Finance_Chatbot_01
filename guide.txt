@@ -1,0 +1,15 @@
+1. Requirements:
+- Python: Version 3.13.2
+- Antlr4: Version 4.9.2
+
+2. Clone Project:
+- Turn on your terminal
+- Direct to the folder that you want
+- git clone
+
+3. Run Project:
+- Run these command step by step:
++ python run.py gen
++ python run.py test
+
+4. Enjoy!

@@ -1,11 +1,4 @@
-Salary: 10.000.000 VND
-Not used: 3.950.000 VND
-Spending categories: Renting (5.000.000 VND), Clothes (1.000.000 VND)
+Salary: 0 VND
+Not used: 0 VND
+Spending categories:
 --------------------Record Of Actions--------------------
-Set salary to 10.000.000 VND - Proceeding
-Add category Renting (5.000.000 VND) - Proceeding
-Add category Food (1.000.000 VND) - Proceeding
-Food: Pizza (50.000 VND) - Proceeding
-Change Food (1.000.000 VND) - Proceeding
-Add Clothes (1.000.000 VND) - Proceeding
-Delete Food - Proceeding

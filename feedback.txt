@@ -1,4 +1,0 @@
-1. Date: 17/05/2025
-- Chatbot and Grammr file seem fine but not wow enough.
-- Make program to let users input different kinds of currency, then change them to VND.
-- Make a diagram based on the user's usage and give advise (could use python library).
