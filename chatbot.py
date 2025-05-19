@@ -1,5 +1,7 @@
-from utils import read_finance_data, write_finance_data, check_funds, check_unallocated, convert_to_vnd
+from utils import read_finance_data, write_finance_data, check_funds, check_unallocated, convert_to_vnd, get_spending_by_category
 from parser import FinanceParser
+from advisor import Advisor
+from visualizer import generate_spending_graph
 
 def run():
     finance_file = "finance_record.txt"
@@ -9,6 +11,7 @@ def run():
     
     print("Hello, User. I am your finance chatbot. What can I do for you today?")
     parser = FinanceParser()
+    advisor = Advisor()
     
     while True:
         user_input = input("You: ").strip()
@@ -24,9 +27,8 @@ def run():
                     original_amount = intent['amount']
                     currency = intent['currency']
                     salary = int(convert_to_vnd(original_amount, currency))
-                    data['salary'] += salary  # Add to existing salary
-                    data['not_used'] += salary  # Add to unallocated money
-                    # Do not reset categories
+                    data['salary'] += salary
+                    data['not_used'] += salary
                     data['actions'].append({
                         'description': f"Added salary",
                         'amount': salary,
@@ -126,6 +128,27 @@ def run():
                     data = {"salary": 0, "not_used": 0, "categories": {}, "actions": []}
                     write_finance_data(finance_file, data)
                     print("Chatbot: All data reset.")
+                
+                elif intent['type'] == 'analyze':
+                    advice = advisor.generate_advice(data)
+                    data['actions'].append({
+                        'description': f"Provided advice",
+                        'advice': advice
+                    })
+                    write_finance_data(finance_file, data)
+                    print(f"Chatbot: {advice}")
+                
+                elif intent['type'] == 'graph':
+                    spending = get_spending_by_category(data)
+                    if spending:
+                        generate_spending_graph(spending)
+                        data['actions'].append({
+                            'description': f"Displayed spending graph"
+                        })
+                        write_finance_data(finance_file, data)
+                        print(f"Chatbot: Displaying spending graph for your categories.")
+                    else:
+                        print(f"Chatbot: No spending data to graph yet.")
         
         except Exception as e:
             print(f"Chatbot: Error processing input: {str(e)}")

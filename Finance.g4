@@ -10,6 +10,8 @@ statement
     | modifyCategoryStmt
     | deleteCategoryStmt
     | resetStmt
+    | analyzeStmt
+    | graphStmt
     ;
 
 salaryStmt: 'i have' amount CURRENCY 'this month'? ;
@@ -18,6 +20,8 @@ spendStmt: ('i spent' | 'i used') amount CURRENCY 'for' item ('in' category)? ;
 modifyCategoryStmt: 'change' 'the' 'money' 'for' category 'to' amount CURRENCY ;
 deleteCategoryStmt: ('delete' | 'remove') category ;
 resetStmt: 'reset' ;
+analyzeStmt: ('analyze' | 'give advice') ;
+graphStmt: ('graph' | 'show graph') ;
 
 categoryList: categoryItem (COMMA categoryItem)* (COMMA)? ;
 categoryItem: amount CURRENCY 'for' category ;

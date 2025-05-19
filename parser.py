@@ -62,11 +62,17 @@ class IntentListener(FinanceListener):
     def exitResetStmt(self, ctx):
         self.intents.append({"type": "reset"})
     
+    def exitAnalyzeStmt(self, ctx):
+        self.intents.append({"type": "analyze"})
+    
+    def exitGraphStmt(self, ctx):
+        self.intents.append({"type": "graph"})
+    
     def parse_amount(self, ctx):
         """Parse amount in Vietnamese number format (e.g., 10.000.000 -> 10000000)."""
         numbers = [num.getText() for num in ctx.NUMBER()]
         try:
-            original_amount = float(''.join(numbers))
+            original_amount = int(''.join(numbers))  # Use int for cleaner output
             return original_amount, original_amount
         except ValueError as e:
             print(f"Error parsing amount: {numbers}")
