@@ -1,4 +1,4 @@
-[⚠️ Suspicious Content] # International University  
+# International University  
 **Vietnam National University - Ho Chi Minh City**  
 
 ## 📘 Course: Principles of Programming Languages  
@@ -190,19 +190,3 @@ Uses NLP (via spaCy) to analyze user data and provide advice on overspending or 
 
 **Persistent Logs:**
 All actions are saved in finance_record.txt with formatted entries for continued use.
-
----
-
-## 📁 Folder Structure
-PPL_Finance_Chatbot_01/
-│
-├── image/                   # Contains all screenshot images used in the README
-├── requirements/            # Dependency files (e.g., ANTLR jar)
-├── chatbot.py               # Main logic for chatbot
-├── run.py                   # Command-line interface
-├── parser.py                # Generated parser from ANTLR
-├── Finance.g4               # ANTLR grammar definition
-├── visualizer.py            # Graph display code
-├── advisor.py               # Spending analysis and tips
-├── utils.py                 # Utility functions (e.g., currency conversion)
-└── finance_record.txt       # Stores logs of all financial actions
