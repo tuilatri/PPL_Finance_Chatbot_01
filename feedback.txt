@@ -5,4 +5,6 @@
 ++ I have 10.000 USD this month
 ++ The program will convert the USD to VND to the finance_record. Every command from user with different kind of currency will be converted to VND in the finance_record
 
+- Make program to give advise based on the usage of users
+
 - Make a diagram based on the user's usage and give advise (could use python library).

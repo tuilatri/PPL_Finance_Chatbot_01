@@ -1,4 +1,4 @@
-# Generated from D:\Studying_Materials\Dai_Hoc_Quoc_Te\Studying\Year_03_2425\Semester_02_2425\Principles_Of_Programming_Languages\Projects\Draft_06\Finance.g4 by ANTLR 4.9.2
+# Generated from D:\Studying_Materials\Dai_Hoc_Quoc_Te\Studying\Year_03_2425\Semester_02_2425\Principles_Of_Programming_Languages\Projects\Draft_08\Finance.g4 by ANTLR 4.9.2
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .FinanceParser import FinanceParser
@@ -77,6 +77,24 @@ class FinanceListener(ParseTreeListener):
 
     # Exit a parse tree produced by FinanceParser#resetStmt.
     def exitResetStmt(self, ctx:FinanceParser.ResetStmtContext):
+        pass
+
+
+    # Enter a parse tree produced by FinanceParser#analyzeStmt.
+    def enterAnalyzeStmt(self, ctx:FinanceParser.AnalyzeStmtContext):
+        pass
+
+    # Exit a parse tree produced by FinanceParser#analyzeStmt.
+    def exitAnalyzeStmt(self, ctx:FinanceParser.AnalyzeStmtContext):
+        pass
+
+
+    # Enter a parse tree produced by FinanceParser#graphStmt.
+    def enterGraphStmt(self, ctx:FinanceParser.GraphStmtContext):
+        pass
+
+    # Exit a parse tree produced by FinanceParser#graphStmt.
+    def exitGraphStmt(self, ctx:FinanceParser.GraphStmtContext):
         pass
 
 

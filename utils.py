@@ -90,3 +90,13 @@ def check_funds(category_amount, spend_amount):
 def check_unallocated(not_used, amount):
     """Check if there is enough unallocated money."""
     return not_used >= amount
+
+def get_spending_by_category(data):
+    """Extract total spending per category from actions."""
+    spending = {}
+    for action in data['actions']:
+        if action['description'] == "Spent" and 'amount' in action and 'category' in action:
+            category = action['category']
+            amount = action['amount']
+            spending[category] = spending.get(category, 0) + amount
+    return spending
