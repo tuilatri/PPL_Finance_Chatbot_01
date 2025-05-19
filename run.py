@@ -1,40 +1,49 @@
 import os
 import sys
+import subprocess
 
-# === Define your variables ===
+# Define paths
 DIR = os.path.dirname(__file__)
-ANTLR_JAR = 'C:\\Application\\antlr4.9.2\\antlr4-4.9.2-complete.jar'  # Update if needed
+ANTLR_JAR = 'C:\\Application\\antlr4.9.2\\antlr4-4.9.2-complete.jar'  # Update to your ANTLR JAR path
 CPL_Dest = os.path.join(DIR, 'CompiledFiles')
 SRC = os.path.join(DIR, 'Finance.g4')
-# "C:\\Application\\antlr4\\antlr-4.13.2-complete.jar"
-def generate():
-    if not os.path.exists(ANTLR_JAR):
-        print(f"Error: ANTLR JAR not found at {ANTLR_JAR}")
-        sys.exit(1)
-    if not os.path.exists(SRC):
-        print(f"Error: Grammar file not found at {SRC}")
-        sys.exit(1)
+
+def generate_antlr_files():
+    """Generate ANTLR parser files from Finance.g4."""
     if not os.path.exists(CPL_Dest):
         os.makedirs(CPL_Dest)
-    os.system(f'java -jar "{ANTLR_JAR}" -Dlanguage=Python3 -o "{CPL_Dest}" "{SRC}"')
-    print("Generated parser successfully.")
-
-def run_chatbot():
+    
+    # Run ANTLR to generate parser files
+    cmd = [
+        'java', '-jar', ANTLR_JAR, '-Dlanguage=Python3',
+        '-o', CPL_Dest, SRC
+    ]
     try:
-        import chatbot
-        chatbot.main()
-    except ImportError:
-        print("Error: chatbot.py not found or CompiledFiles not generated. Run 'python run.py gen' first.")
+        subprocess.run(cmd, check=True)
+        print("ANTLR files generated successfully in CompiledFiles/")
+    except subprocess.CalledProcessError as e:
+        print(f"Error generating ANTLR files: {e}")
         sys.exit(1)
 
-if __name__ == '__main__':
+def run_chatbot():
+    """Run the chatbot program."""
+    from chatbot import run
+    run()
+
+if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: python run.py [gen|test]")
         sys.exit(1)
-    elif sys.argv[1] == "gen":
-        generate()
-    elif sys.argv[1] == "test":
+    
+    command = sys.argv[1].lower()
+    if command == "gen":
+        generate_antlr_files()
+    elif command == "test":
+        # Ensure ANTLR files are generated before running
+        if not os.path.exists(CPL_Dest):
+            print("CompiledFiles not found. Run 'python run.py gen' first.")
+            sys.exit(1)
         run_chatbot()
     else:
-        print("Invalid argument. Use 'gen' or 'test'.")
+        print("Invalid command. Use 'gen' or 'test'.")
         sys.exit(1)

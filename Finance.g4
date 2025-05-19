@@ -1,29 +1,34 @@
 grammar Finance;
 
 // Parser rules
-program: (command | userInput)+ EOF;
+start: statement+ EOF;
 
-userInput: salaryInput | categoriesInput;
+statement
+    : salaryStmt
+    | categoryStmt
+    | spendStmt
+    | modifyCategoryStmt
+    | deleteCategoryStmt
+    | resetStmt
+    ;
 
-salaryInput: NUMBER 'VND';
+salaryStmt: 'i have' amount CURRENCY 'this month'? ;
+categoryStmt: 'i want' 'to have'? categoryList ;
+spendStmt: ('i spent' | 'i used') amount CURRENCY 'for' item ('in' category)? ;
+modifyCategoryStmt: 'change' 'the' 'money' 'for' category 'to' amount CURRENCY ;
+deleteCategoryStmt: ('delete' | 'remove') category ;
+resetStmt: 'reset' ;
 
-categoriesInput: category (',' category)*;
-category: ID '(' NUMBER 'VND' ')';
+categoryList: categoryItem (COMMA categoryItem)* (COMMA)? ;
+categoryItem: amount CURRENCY 'for' category ;
 
-command: spendCommand | changeCommand | addCommand | deleteCommand | resetCommand;
-
-spendCommand: ID ':' ID '(' NUMBER 'VND' ')';
-changeCommand: 'Change' ID '(' NUMBER 'VND' ')';
-addCommand: 'Add' ID '(' NUMBER 'VND' ')';
-deleteCommand: 'Delete' ID;
-resetCommand: 'Reset';
+amount: NUMBER ('.' NUMBER)* ;
+category: ID ;
+item: ID (ID)* ;
 
 // Lexer rules
-ID: [a-zA-Z][a-zA-Z0-9]*; // Category or item names (start with letter, then letters or digits)
-NUMBER: [0-9]+ ('.' [0-9]+)*; // Numbers like 10.000.000
-VND: 'VND';
-COLON: ':';
-LPAREN: '(';
-RPAREN: ')';
-COMMA: ',';
-WS: [ \t\r\n]+ -> skip; // Ignore whitespace
+NUMBER: [0-9]+ ;
+CURRENCY: [vV][nN][dD] | [uU][sS][dD] | [eE][uU][rR] | [jJ][pP][yY] | [cC][nN][yY] ;
+ID: [a-zA-Z]+ ;
+WS: [ \t\r\n]+ -> skip ;
+COMMA: ',' ;
