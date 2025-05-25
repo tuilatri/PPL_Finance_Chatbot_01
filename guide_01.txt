@@ -1,0 +1,136 @@
+1. Requirements:
+- Python: Version 3.13.2
+- Antlr4: Version 4.9.2
+
+2. Clone Project:
+- Turn on your terminal
+- Direct to the folder that you want
+- git clone https://github.com/tuilatri/PPL_Finance_Chatbot_01.git
+
+3. Run Project:
+- Run these command step by step:
++ python run.py gen
++ python run.py test
+
+4. Enjoy!
+
+5. Example:
+Hello, User. I am your finance chatbot. What can I do for you today?
+You: i have 10.000 cny 
+Chatbot: Added 35000000 VND (10000.0 CNY) to salary. Total salary: 35000000 VND. Please specify spending categories.
+You: i have 10.000 jpy
+Chatbot: Added 1700000 VND (10000.0 JPY) to salary. Total salary: 36700000 VND. Please specify spending categories.
+You: i have 10.000 usd 
+Chatbot: Added 250000000 VND (10000.0 USD) to salary. Total salary: 286700000 VND. Please specify spending categories.
+You: i have 10.000 vnd 
+Chatbot: Added 10000 VND (10000.0 VND) to salary. Total salary: 286710000 VND. Please specify spending categories.
+You: i want to have 5.000 USD for Renting, 2.000 CNY for Food
+Chatbot: Categories added. Unallocated money: 154710000 VND
+You: i used 10.000 jpy for Pho 
+Chatbot: Enough money. Proceeding with pho for 1700000 VND (10000.0 JPY).
+You: i want to have 1.000 jpy for Emergency
+Chatbot: Categories added. Unallocated money: 154540000 VND
+You: change the money for Food to 500 eur
+Chatbot: Category Food modified to 13500000 VND (500.0 EUR).
+You: i used 100.000 vnd for Repair in Emergency
+Chatbot: Enough money. Proceeding with repair for 100000 VND (100000.0 VND).
+You: delete Emergency
+Chatbot: Category Emergency deleted.
+
+6. Downlaod python 3.12.10
+
+7. Identify the path of python version 3.12.10
+
+8. Create virtual environment:
+C:\Application\python\python-3.12.10\python.exe -m venv venv
+
+9. Use virtual environment:
+.\venv\Scripts\Activate.ps1
+
+10. Download dependencies:
+python -m pip install spacy==3.8.2 antlr4-python3-runtime==4.9.2
+python -m spacy download en_core_web_sm
+
+11. Check dependencies:
+python -m pip list
+
+12. Testing:
+(venv) PS D:\Studying_Materials\Dai_Hoc_Quoc_Te\Studying\Year_03_2425\Semester_02_2425\Principles_Of_Programming_Languages\Projects\Draft_07> python run.py test
+Hello, User. I am your finance chatbot. What can I do for you today?
+You: i have 10.000 cny 
+Chatbot: Added 35000000 VND (10000 CNY) to salary. Total salary: 35000000 VND. Please specify spending categories.
+You: i have 10.000 jpy
+Chatbot: Added 1700000 VND (10000 JPY) to salary. Total salary: 36700000 VND. Please specify spending categories.
+You: i have 10.000 usd 
+Chatbot: Added 250000000 VND (10000 USD) to salary. Total salary: 286700000 VND. Please specify spending categories.
+You: i have 10.000 vnd 
+Chatbot: Added 10000 VND (10000 VND) to salary. Total salary: 286710000 VND. Please specify spending categories.
+You: i want to have 5.000 USD for Renting, 2.000 CNY for Food
+Chatbot: Categories added. Unallocated money: 154710000 VND
+You: i used 10.000 jpy for Pho 
+Chatbot: Enough money. Proceeding with pho for 1700000 VND (10000 JPY).
+You: i want to have 1.000 jpy for Emergency
+Chatbot: Categories added. Unallocated money: 154540000 VND
+You: change the money for Food to 500 eur
+Chatbot: Category Food modified to 13500000 VND (500 EUR).
+You: i used 100.000 vnd for Repair in Emergency
+Chatbot: Enough money. Proceeding with repair for 100000 VND (100000 VND).
+You: analyze
+Chatbot: Your spending is quite conservative, which is great! Consider investing some of your unallocated funds for future growth.
+You: i want to have 200.000.000 VND for Housing
+Chatbot: Not enough unallocated money to add these categories.
+You: i want to have 200.000 VND for Housing    
+Chatbot: Categories added. Unallocated money: 146140000 VND
+You: i want to have 100.000.000 VND for Housing
+Chatbot: Categories added. Unallocated money: 46140000 VND
+You: analyze
+Chatbot: Your spending is quite conservative, which is great! Consider investing some of your unallocated funds for future growth.
+You: i used 100.000.000 VND for House
+Chatbot: Insufficient funds in Other or category does not exist.
+You: i used 100.000.000 VND for House in Housing
+Chatbot: Enough money. Proceeding with house for 100000000 VND (100000000 VND).
+You: analyze
+Chatbot: Your spending seems balanced. Keep tracking your expenses to stay on top of your finances!
+You: i want to have 45.000.000 VND for Housing
+Chatbot: Categories added. Unallocated money: 1140000 VND
+You: i used 45.200.000 VND forAppilcations in Housing 
+line 1:22 missing 'for' at 'forappilcations'
+Chatbot: Enough money. Proceeding with forappilcations for 45200000 VND (45200000 VND).
+You: analyze                                         
+Chatbot: You're spending 50.6% of your salary (145200000 VND) on Housing. Consider reducing this to save more.
+
+13. Download dependency:
+python -m pip install matplotlib
+
+14. Testing:
+// Input salary in different currencies
+i have 10.000 cny
+i have 10.000 jpy
+i have 10.000 usd
+i have 10.000 vnd
+i have 10.000 eur
+
+// Create spending category(ies)
+i want to have 1.000 USD for Renting, 1.000 CNY for Food, 1.000 EUR for Clothes, 1.000 JPY for Emergency
+
+// Using
+i used 10.000 jpy for Pho
+i used 100.000 vnd for Repair in Emergency
+
+// Change
+change the money for Food to 1.000 eur
+
+// Delete
+delete Clothes
+
+// Reset
+reset
+
+// Analyze
+analyze
+
+// Graph
+graph
+
+// Exit
+exit
