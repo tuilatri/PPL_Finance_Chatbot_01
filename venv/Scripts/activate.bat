@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set "VIRTUAL_ENV=D:\PPL_Draft_01\PPL_Finance_Chatbot_01\venv"
+set "VIRTUAL_ENV=D:\PPL_Finance_Chatbot_01\venv"
 
 if not defined PROMPT set PROMPT=$P$G
 

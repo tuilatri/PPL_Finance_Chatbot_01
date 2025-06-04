@@ -1,4 +1,4 @@
-#!D:\PPL_Draft_01\PPL_Finance_Chatbot_01\venv\Scripts\python.exe
+#!D:\PPL_Finance_Chatbot_01\venv\Scripts\python.exe
 __author__ = 'jszheng'
 import optparse
 import sys
