@@ -99,6 +99,7 @@ def process_input():
         logging.debug(f"Parsed intents: {intents}")
         responses = []
         date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        suggestions = []
 
         for intent in intents:
             try:
@@ -107,7 +108,7 @@ def process_input():
                     cursor.execute('INSERT INTO salary (user_id, amount, original_amount, currency, date) VALUES (?, ?, ?, ?, ?)', 
                                  (user_id, amount_vnd, intent['amount'], intent['currency'], date))
                     cursor.execute('INSERT INTO actions (user_id, description, details, date) VALUES (?, ?, ?, ?)', 
-                                 (user_id, "Spent", json.dumps({
+                                 (user_id, "Added salary", json.dumps({
                                      'amount': amount_vnd,
                                      'original_amount': intent['amount'],
                                      'currency': intent['currency']
@@ -225,6 +226,21 @@ def process_input():
                     else:
                         responses.append("No spending data to graph yet.")
 
+                elif intent['type'] == 'error':
+                    # Define the list of suggestions
+                    suggestion_list = [
+                        "i have 5000000 vnd this month",
+                        "i want 2000000 vnd for food, 1000000 vnd for emergency",
+                        "i spent 50000 vnd for pho in food",
+                        "change the money for food to 2500000 vnd",
+                        "delete category food",
+                        "analyze",
+                        "graph",
+                        "reset"
+                    ]
+                    responses.append("You entered an incorrect prompt structure. Here are some suggestions:")
+                    suggestions.extend(suggestion_list)
+
             except Exception as e:
                 logging.error(f"Error processing intent {intent['type']}: {str(e)}")
                 responses.append(f"Error processing {intent['type']}: {str(e)}")
@@ -232,13 +248,21 @@ def process_input():
         conn.commit()
         financial_data = get_financial_data(cursor, user_id)
         close_db_connection(conn)
-        return jsonify({'response': '\n'.join(responses), 'financial_data': financial_data})
+        return jsonify({
+            'response': '\n'.join(responses) if responses else '',
+            'suggestions': suggestions,
+            'financial_data': financial_data
+        })
 
     except Exception as e:
         logging.error(f"Error in process_input: {str(e)}")
         financial_data = get_financial_data(cursor, user_id) if cursor else {}
         close_db_connection(conn)
-        return jsonify({'response': f"Error processing input: {str(e)}", 'financial_data': financial_data}), 500
+        return jsonify({
+            'response': f"Error processing input: {str(e)}",
+            'suggestions': [],
+            'financial_data': financial_data
+        }), 500
 
 @app.route('/api/financial_data', methods=['GET'])
 def get_financial_data_endpoint():

@@ -108,7 +108,7 @@ def run():
                     cursor.execute('''
                         INSERT INTO actions (user_id, description, details, date)
                         VALUES (?, ?, ?, ?)
-                    ''', (user_id, "Spent", json.dumps({
+                    ''', (user_id, "Added salary", json.dumps({
                         'amount': amount_vnd,
                         'original_amount': original_amount,
                         'currency': currency
@@ -140,8 +140,8 @@ def run():
                                 'original_amount': orig_amount,
                                 'currency': currency
                             }), date))
-                        conn.commit()   #merge 1.0
-                        print(f"Chatbot: Categories added. Unallocated money: {format_vnd(get_unallocated(cursor, user_id))} VND")
+                        conn.commit()
+                        print(f"Categories added. Unallocated money: {format_vnd(get_unallocated(cursor, user_id))} VND")
                     else:
                         print("Chatbot: Not enough unallocated money to add these categories.")
                 
@@ -229,14 +229,16 @@ def run():
                     cursor.execute('DELETE FROM salary WHERE user_id = ?', (user_id,))
                     cursor.execute('DELETE FROM categories WHERE user_id = ?', (user_id,))
                     cursor.execute('DELETE FROM spending WHERE user_id = ?', (user_id,))
-                    cursor.execute('DELETE FROM actions WHERE user_id = ?', (user_id,))
+                    cursor.execute('''
+                        DELETE FROM actions WHERE user_id = ?
+                    ''', (user_id,))
                     cursor.execute('''
                         INSERT INTO actions (user_id, description, details, date)
                         VALUES (?, ?, ?, ?)
                     ''', (user_id, "Reset all data", json.dumps({}), date))
                     conn.commit()
                     print("Chatbot: All data reset.")
-                
+
                 elif intent['type'] == 'analyze':
                     data = {
                         'salary': get_unallocated(cursor, user_id) + sum(c[0] for c in cursor.execute('SELECT amount FROM categories WHERE user_id = ?', (user_id,)).fetchall()),
@@ -251,7 +253,7 @@ def run():
                     ''', (user_id, "Provided advice", json.dumps({'advice': advice}), date))
                     conn.commit()
                     print(f"Chatbot: {advice}")
-                
+
                 elif intent['type'] == 'graph':
                     spending = get_spending_by_category(cursor, user_id)
                     if spending:
@@ -261,13 +263,13 @@ def run():
                             VALUES (?, ?, ?, ?)
                         ''', (user_id, "Displayed spending graph", json.dumps({}), date))
                         conn.commit()
-                        print(f"Chatbot: Displaying spending graph for your categories.")
+                        print("Chatbot: Displaying spending graph for your categories.")
                     else:
-                        print(f"Chatbot: No spending data to graph yet.")
-        
+                        print("Chatbot: No spending data to graph yet.")
+
         except Exception as e:
             print(f"Chatbot: Error processing input: {str(e)}")
-    
+
     conn.close()
 
 if __name__ == "__main__":
