@@ -148,6 +148,7 @@ Convert the user input into one or more of the above commands. Return the comman
         try:
             response = self.hf_client.chat_completion(
                 model="meta-llama/Meta-Llama-3-8B-Instruct",
+                # model="deepseek-ai/DeepSeek-R1-0528",
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": f"Input: {text}\nOutput:"}
