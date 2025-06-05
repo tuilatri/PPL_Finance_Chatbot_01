@@ -137,3 +137,15 @@ The chatbot accepts the following commands and records actions in `finance_recor
 - The grammar file `Finance.g4` defines the structure of acceptable commands, and `chatbot.py` manages the logic and interaction.
 
 ---
+
+
+
+
+=====================================
+050625
+.\venv\Scripts\Activate.ps1
+$Env:HF_TOKEN = "HF_TOKEN"
+deactivate
+.\venv\Scripts\Activate.ps1
+echo $Env:HF_TOKEN
+python server.py

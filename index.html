@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Define CSS variables for light and dark themes */
+        :root {
+            --bg-primary: #f3f4f6;
+            --bg-secondary: white;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --message-bot-bg: #f1f5f9;
+            --message-user-bg: #3b82f6;
+            --message-user-text: white;
+            --button-bg: #f1f5f9;
+            --button-bg-hover: #e5e7eb;
+            --button-border: #d1d5db;
+            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --toggle-bg-off: #d1d5db;
+            --toggle-bg-on: #3b82f6;
+            --toggle-knob-bg: white;
+            --scrollbar-track: #e5e7eb;
+            --scrollbar-thumb: #9ca3af;
+            --scrollbar-thumb-hover: #6b7280;
+        }
+        /* Dark mode variables */
+        [data-theme="dark"] {
+            --bg-primary: #1f2937;
+            --bg-secondary: #374151;
+            --text-primary: #f3f4f6;
+            --text-secondary: #d1d5db;
+            --text-muted: #9ca3af;
+            --border-color: #4b5563;
+            --message-bot-bg: #4b5563;
+            --message-user-bg: #2563eb;
+            --message-user-text: #e5e7eb;
+            --button-bg: #4b5563;
+            --button-bg-hover: #6b7280;
+            --button-border: #6b7280;
+            --shadow: 0 2px 4px rgba(0,0,0,0.3);
+            --toggle-bg-off: #4b5563;
+            --toggle-bg-on: #2563eb;
+            --toggle-knob-bg: #e5e7eb;
+            --scrollbar-track: #4b5563;
+            --scrollbar-thumb: #6b7280;
+            --scrollbar-thumb-hover: #9ca3af;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1200px;
+            padding: 1rem;
+            gap: 1rem;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        .chat-section {
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 50vh;
+        }
+        .chat-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .chat-header h1 {
+            font-size: 1.25rem;
+            line-height: 1.5rem;
+        }
+        .chat-header p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        .theme-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 3rem;
+            height: 1.5rem;
+            background-color: var(--toggle-bg-off);
+            border-radius: 9999px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .theme-toggle[data-state="dark"] {
+            background-color: var(--toggle-bg-on);
+        }
+        .theme-toggle-knob {
+            position: absolute;
+            width: 1.25rem;
+            height: 1.25rem;
+            background-color: var(--toggle-knob-bg);
+            border-radius: 50%;
+            top: 0.125rem;
+            left: 0.125rem;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+        .theme-toggle[data-state="dark"] .theme-toggle-knob {
+            transform: translateX(1.5rem);
+        }
+        .theme-toggle-icon {
+            position: absolute;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            transition: opacity 0.3s;
+        }
+        .theme-toggle-icon--light {
+            left: 0.25rem;
+            opacity: 1;
+        }
+        .theme-toggle-icon--dark {
+            right: 0.25rem;
+            opacity: 0;
+        }
+        .theme-toggle[data-state="dark"] .theme-toggle-icon--light {
+            opacity: 0;
+        }
+        .theme-toggle[data-state="dark"] .theme-toggle-icon--dark {
+            opacity: 1;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            /* Custom scrollbar styles for Webkit browsers */
+            scrollbar-width: thin; /* For Firefox */
+            scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track); /* For Firefox */
+        }
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+        .chat-messages::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+            border-radius: 4px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: var(--scrollbar-thumb-hover);
+        }
+        .message {
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            max-width: 80%;
+            word-wrap: break-word;
+            font-size: 0.875rem;
+        }
+        .bot-message {
+            background-color: var(--message-bot-bg);
+            align-self: flex-start;
+        }
+        .user-message {
+            background-color: var(--message-user-bg);
+            color: var(--message-user-text);
+            align-self: flex-end;
+        }
+        .chat-input-container {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .chat-input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            outline: none;
+            font-size: 0.875rem;
+            min-width: 200px;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        .send-button {
+            padding: 0.5rem;
+            background: var(--message-user-bg);
+            color: var(--message-user-text);
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .send-button:hover {
+            background: #2563eb;
+        }
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            flex: 1;
+        }
+        .sidebar-section {
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow);
+            padding: 1rem;
+        }
+        .sidebar-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .stat-item, .category-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.875rem;
+        }
+        .stat-label {
+            color: var(--text-muted);
+        }
+        .stat-value {
+            font-weight: 500;
+        }
+        .quick-action-btn, .suggestion-btn {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.25rem 0;
+            background: var(--button-bg);
+            border: 1px solid var(--button-border);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            text-align: left;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        .quick-action-btn:hover, .suggestion-btn:hover {
+            background: var(--button-bg-hover);
+        }
+        .suggestion-container {
+            max-width: 80%;
+            align-self: flex-start;
+            margin-top: 0.25rem;
+        }
+        .examples-section {
+            margin-top: 1rem;
+        }
+        .examples-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .example {
+            padding: 0.5rem;
+            background: var(--button-bg);
+            border-radius: 0.25rem;
+            margin: 0.25rem 0;
+            cursor: pointer;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .example:hover {
+            background: var(--button-bg-hover);
+        }
+        .chart-container {
+            position: relative;
+            height: 200px;
+            width: 100%;
+        }
+        .no-categories {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            padding: 1rem;
+        }
+
+        /* Responsive adjustments using media queries */
+        @media (min-width: 640px) {
+            .container {
+                padding: 1.5rem;
+            }
+            .chat-header h1 {
+                font-size: 1.5rem;
+            }
+            .chat-header p {
+                font-size: 1rem;
+            }
+            .message {
+                font-size: 1rem;
+            }
+            .chat-input {
+                font-size: 1rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+                height: calc(100vh - 3rem);
+            }
+            .chat-section {
+                flex: 2;
+                min-height: 0;
+            }
+            .sidebar {
+                flex: 1;
+            }
+            .chart-container {
+                height: 250px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 2rem;
+                height: calc(100vh - 4rem);
+            }
+            .chat-section {
+                flex: 3;
+            }
+            .sidebar {
+                flex: 2;
+            }
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="chat-section">
+            <div class="chat-header">
+                <h1>💰 Finance Chatbot</h1>
+                <p>Your personal financial assistant</p>
+                <div class="theme-toggle" onclick="toggleTheme()" data-state="light">
+                    <span class="theme-toggle-icon theme-toggle-icon--light">☀️</span>
+                    <span class="theme-toggle-icon theme-toggle-icon--dark">🌙</span>
+                    <span class="theme-toggle-knob"></span>
+                </div>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    Hello! I'm your finance chatbot. I can help you manage your salary, spending categories, track expenses, and provide financial advice. What can I do for you today?
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" class="chat-input" placeholder="Type your message..." autocomplete="off">
+                <button id="sendButton" class="send-button">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22,2 15,22 11,13 2,9"></polygon>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📊 Financial Overview</div>
+                <div class="stat-item">
+                    <span class="stat-label">Total Salary</span>
+                    <span class="stat-value" id="totalSalary">0 VND</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Unallocated</span>
+                    <span class="stat-value" id="unallocated">0 VND</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Total Spent</span>
+                    <span class="stat-value" id="totalSpent">0 VND</span>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">🏷️ Categories</div>
+                <div id="categoriesList">
+                    <div class="no-categories">
+                        No categories yet
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📈 Spending Chart</div>
+                <div class="chart-container">
+                    <canvas id="spendingChart"></canvas>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">⚡ Quick Actions</div>
+                <div class="quick-actions">
+                    <button class="quick-action-btn" onclick="insertExample('analyze')">Get Financial Advice</button>
+                    <button class="quick-action-btn" onclick="insertExample('graph')">Show Spending Graph</button>
+                    <button class="quick-action-btn" onclick="insertExample('reset')">Reset All Data</button>
+                </div>
+                <div class="examples-section">
+                    <div class="examples-title">💡 Example Commands</div>
+                    <div class="example" onclick="insertExample('i have 5000000 vnd this month')">i have 5000000 vnd this month</div>
+                    <div class="example" onclick="insertExample('i want 2000000 vnd for food, 1000000 vnd for emergency')">i want 2000000 vnd for food, 1000000 vnd for emergency</div>
+                    <div class="example" onclick="insertExample('i spent 50000 vnd for pho in food')">i spent 50000 vnd for pho in food</div>
+                    <div class="example" onclick="insertExample('change the money for food to 2500000 vnd')">change the money for food to 2500000 vnd</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let spendingChart;
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const toggle = document.querySelector('.theme-toggle');
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            const newTheme = isDark ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            toggle.setAttribute('data-state', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme on page load
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+            document.querySelector('.theme-toggle').setAttribute('data-state', savedTheme);
+        }
+
+        function addMessage(content, isUser = false) {
+            if (!content) return;
+            const chatMessages = document.getElementById('chatMessages');
+            content.split('\n').forEach(line => {
+                if (line.trim()) {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+                    messageDiv.textContent = line.trim();
+                    chatMessages.appendChild(messageDiv);
+                }
+            });
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function addSuggestions(suggestions) {
+            if (!suggestions || suggestions.length === 0) return;
+            const chatMessages = document.getElementById('chatMessages');
+            const suggestionContainer = document.createElement('div');
+            suggestionContainer.className = 'suggestion-container';
+            
+            suggestions.forEach(suggestion => {
+                const button = document.createElement('button');
+                button.className = 'suggestion-btn';
+                button.textContent = suggestion;
+                button.onclick = () => {
+                    document.getElementById('chatInput').value = suggestion;
+                    document.getElementById('chatInput').focus();
+                    // Removed processInput(suggestion) to prevent immediate action
+                };
+                suggestionContainer.appendChild(button);
+            });
+            
+            chatMessages.appendChild(suggestionContainer);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function updateFinancialOverview(data) {
+            document.getElementById('totalSalary').textContent = data.total_salary || '0 VND';
+            document.getElementById('unallocated').textContent = data.unallocated || '0 VND';
+            document.getElementById('totalSpent').textContent = data.total_spent || '0 VND';
+            const categoriesList = document.getElementById('categoriesList');
+            categoriesList.innerHTML = '';
+            if (!data.categories || data.categories.length === 0) {
+                categoriesList.innerHTML = '<div class="no-categories">No categories yet</div>';
+            } else {
+                data.categories.forEach(cat => {
+                    const div = document.createElement('div');
+                    div.className = 'category-item';
+                    div.innerHTML = `<span>${cat.category}</span><span>${cat.amount} VND</span>`;
+                    categoriesList.appendChild(div);
+                });
+            }
+            const ctx = document.getElementById('spendingChart').getContext('2d');
+            if (spendingChart) spendingChart.destroy();
+            spendingChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: data.spending ? data.spending.labels : [],
+                    datasets: [{
+                        data: data.spending ? data.spending.data : [],
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        }
+
+        async function processInput(input) {
+            if (!input) return;
+            addMessage(input, true);
+            try {
+                const response = await fetch('/api/process', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ input })
+                });
+                if (!response.ok) {
+                    const text = await response.text();
+                    console.error('Non-OK response:', response.status, text);
+                    throw new Error(`Server error: ${response.status} ${text.slice(0, 100)}...`);
+                }
+                const data = await response.json();
+                if (data.response) {
+                    addMessage(data.response);
+                }
+                if (data.suggestions && data.suggestions.length > 0) {
+                    addSuggestions(data.suggestions);
+                }
+                if (data.financial_data) {
+                    updateFinancialOverview(data.financial_data);
+                }
+            } catch (err) {
+                console.error('Fetch error:', err);
+                addMessage(`Error: ${err.message}`);
+            }
+        }
+
+        async function loadInitialData() {
+            try {
+                const response = await fetch('/api/financial_data');
+                if (!response.ok) {
+                    const text = await response.text();
+                    console.error('Non-OK response for financial data:', response.status, text);
+                    throw new Error(`Server error: ${response.status}`);
+                }
+                const data = await response.json();
+                updateFinancialOverview(data);
+            } catch (err) {
+                console.error('Failed to load initial data:', err);
+                addMessage(`Error loading initial data: ${err.message}`);
+            }
+        }
+
+        function insertExample(text) {
+            document.getElementById('chatInput').value = text;
+            document.getElementById('chatInput').focus();
+        }
+
+        document.getElementById('sendButton').addEventListener('click', () => {
+            const input = document.getElementById('chatInput').value.trim();
+            if (input) {
+                processInput(input);
+                document.getElementById('chatInput').value = '';
+            }
+        });
+
+        document.getElementById('chatInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const input = e.target.value.trim();
+                if (input) {
+                    processInput(input);
+                    e.target.value = '';
+                }
+            }
+        });
+
+        // Load theme and initial financial data on page load
+        loadTheme();
+        loadInitialData();
+    </script>
+</body>
+</html>

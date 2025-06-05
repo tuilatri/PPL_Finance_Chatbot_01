@@ -1,4 +1,3 @@
-
 from utils import format_vnd
 
 def generate_spending_graph(spending):
@@ -20,7 +19,7 @@ def generate_spending_graph(spending):
                     "#388E3C", "#1976D2", "#F57C00", "#D32F2F", "#7B1FA2"
                 ],
                 "borderWidth": 1
-            }] # 1.0
+            }]
         },
         "options": {
             "scales": {
@@ -31,7 +30,7 @@ def generate_spending_graph(spending):
                         "text": "Amount (VND)"
                     },
                     "ticks": {
-                        "callback": f"function(value) {{ return '{format_vnd(values())} VND'; }}"
+                        "callback": f"function(value) {{ return '{format_vnd(int(value))} VND'; }}"
                     }
                 },
                 "x": {
@@ -55,3 +54,4 @@ def generate_spending_graph(spending):
     
     # In a real app, this would be rendered in a UI. For now, simulate output.
     print("Chart generated (simulated). Data:", chart_config)
+    return chart_config

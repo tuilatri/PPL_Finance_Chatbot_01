@@ -14,7 +14,7 @@ statement
     | graphStmt
     ;
 
-salaryStmt: 'i have' amount CURRENCY 'this month'? ;
+salaryStmt: ('i have' | 'i got' | 'i received') amount CURRENCY ('this month' | 'this month\'s salary')? ;
 categoryStmt: 'i want' 'to have'? categoryList ;
 spendStmt: ('i spent' | 'i used') amount CURRENCY 'for' item ('in' category)? ;
 modifyCategoryStmt: 'change' 'the' 'money' 'for' category 'to' amount CURRENCY ;
@@ -26,7 +26,8 @@ graphStmt: ('graph' | 'show graph') ;
 categoryList: categoryItem (COMMA categoryItem)* (COMMA)? ;
 categoryItem: amount CURRENCY 'for' category ;
 
-amount: NUMBER ('.' NUMBER)* ;
+amount: NUMBER ('.' NUMBER)* multiplier? ;
+multiplier: 'million' | 'm' | 'thousand' | 'k' ;
 category: ID ;
 item: ID (ID)* ;
 

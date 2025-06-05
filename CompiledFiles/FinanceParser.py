@@ -1,4 +1,4 @@
-# Generated from D:\PPL_Draft_01\PPL_Finance_Chatbot_01\Finance.g4 by ANTLR 4.9.2
+# Generated from D:\PPL_Finance_Chatbot_01\Finance.g4 by ANTLR 4.9.2
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -11,44 +11,47 @@ else:
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\33")
-        buf.write("z\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b")
-        buf.write("\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16\t")
-        buf.write("\16\4\17\t\17\4\20\t\20\3\2\6\2\"\n\2\r\2\16\2#\3\2\3")
-        buf.write("\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\60\n\3\3\4\3\4")
-        buf.write("\3\4\3\4\5\4\66\n\4\3\5\3\5\5\5:\n\5\3\5\3\5\3\6\3\6\3")
-        buf.write("\6\3\6\3\6\3\6\3\6\5\6E\n\6\3\7\3\7\3\7\3\7\3\7\3\7\3")
-        buf.write("\7\3\7\3\7\3\b\3\b\3\b\3\t\3\t\3\n\3\n\3\13\3\13\3\f\3")
-        buf.write("\f\3\f\7\f\\\n\f\f\f\16\f_\13\f\3\f\5\fb\n\f\3\r\3\r\3")
-        buf.write("\r\3\r\3\r\3\16\3\16\3\16\7\16l\n\16\f\16\16\16o\13\16")
-        buf.write("\3\17\3\17\3\20\3\20\7\20u\n\20\f\20\16\20x\13\20\3\20")
-        buf.write("\2\2\21\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36\2\6\3\2")
-        buf.write("\7\b\3\2\17\20\3\2\22\23\3\2\24\25\2y\2!\3\2\2\2\4/\3")
-        buf.write("\2\2\2\6\61\3\2\2\2\b\67\3\2\2\2\n=\3\2\2\2\fF\3\2\2\2")
-        buf.write("\16O\3\2\2\2\20R\3\2\2\2\22T\3\2\2\2\24V\3\2\2\2\26X\3")
-        buf.write("\2\2\2\30c\3\2\2\2\32h\3\2\2\2\34p\3\2\2\2\36r\3\2\2\2")
-        buf.write(" \"\5\4\3\2! \3\2\2\2\"#\3\2\2\2#!\3\2\2\2#$\3\2\2\2$")
-        buf.write("%\3\2\2\2%&\7\2\2\3&\3\3\2\2\2\'\60\5\6\4\2(\60\5\b\5")
-        buf.write("\2)\60\5\n\6\2*\60\5\f\7\2+\60\5\16\b\2,\60\5\20\t\2-")
-        buf.write("\60\5\22\n\2.\60\5\24\13\2/\'\3\2\2\2/(\3\2\2\2/)\3\2")
-        buf.write("\2\2/*\3\2\2\2/+\3\2\2\2/,\3\2\2\2/-\3\2\2\2/.\3\2\2\2")
-        buf.write("\60\5\3\2\2\2\61\62\7\3\2\2\62\63\5\32\16\2\63\65\7\30")
-        buf.write("\2\2\64\66\7\4\2\2\65\64\3\2\2\2\65\66\3\2\2\2\66\7\3")
-        buf.write("\2\2\2\679\7\5\2\28:\7\6\2\298\3\2\2\29:\3\2\2\2:;\3\2")
-        buf.write("\2\2;<\5\26\f\2<\t\3\2\2\2=>\t\2\2\2>?\5\32\16\2?@\7\30")
-        buf.write("\2\2@A\7\t\2\2AD\5\36\20\2BC\7\n\2\2CE\5\34\17\2DB\3\2")
-        buf.write("\2\2DE\3\2\2\2E\13\3\2\2\2FG\7\13\2\2GH\7\f\2\2HI\7\r")
-        buf.write("\2\2IJ\7\t\2\2JK\5\34\17\2KL\7\16\2\2LM\5\32\16\2MN\7")
-        buf.write("\30\2\2N\r\3\2\2\2OP\t\3\2\2PQ\5\34\17\2Q\17\3\2\2\2R")
-        buf.write("S\7\21\2\2S\21\3\2\2\2TU\t\4\2\2U\23\3\2\2\2VW\t\5\2\2")
-        buf.write("W\25\3\2\2\2X]\5\30\r\2YZ\7\33\2\2Z\\\5\30\r\2[Y\3\2\2")
-        buf.write("\2\\_\3\2\2\2][\3\2\2\2]^\3\2\2\2^a\3\2\2\2_]\3\2\2\2")
-        buf.write("`b\7\33\2\2a`\3\2\2\2ab\3\2\2\2b\27\3\2\2\2cd\5\32\16")
-        buf.write("\2de\7\30\2\2ef\7\t\2\2fg\5\34\17\2g\31\3\2\2\2hm\7\27")
-        buf.write("\2\2ij\7\26\2\2jl\7\27\2\2ki\3\2\2\2lo\3\2\2\2mk\3\2\2")
-        buf.write("\2mn\3\2\2\2n\33\3\2\2\2om\3\2\2\2pq\7\31\2\2q\35\3\2")
-        buf.write("\2\2rv\7\31\2\2su\7\31\2\2ts\3\2\2\2ux\3\2\2\2vt\3\2\2")
-        buf.write("\2vw\3\2\2\2w\37\3\2\2\2xv\3\2\2\2\13#/\659D]amv")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\"")
+        buf.write("\u0081\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
+        buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
+        buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\3\2\6\2$\n\2\r\2\16")
+        buf.write("\2%\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\62\n\3")
+        buf.write("\3\4\3\4\3\4\3\4\5\48\n\4\3\5\3\5\5\5<\n\5\3\5\3\5\3\6")
+        buf.write("\3\6\3\6\3\6\3\6\3\6\3\6\5\6G\n\6\3\7\3\7\3\7\3\7\3\7")
+        buf.write("\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\t\3\t\3\n\3\n\3\13\3\13")
+        buf.write("\3\f\3\f\3\f\7\f^\n\f\f\f\16\fa\13\f\3\f\5\fd\n\f\3\r")
+        buf.write("\3\r\3\r\3\r\3\r\3\16\3\16\3\16\7\16n\n\16\f\16\16\16")
+        buf.write("q\13\16\3\16\5\16t\n\16\3\17\3\17\3\20\3\20\3\21\3\21")
+        buf.write("\7\21|\n\21\f\21\16\21\177\13\21\3\21\2\2\22\2\4\6\b\n")
+        buf.write("\f\16\20\22\24\26\30\32\34\36 \2\t\3\2\3\5\3\2\6\7\3\2")
+        buf.write("\n\13\3\2\22\23\3\2\25\26\3\2\27\30\3\2\32\35\2\u0080")
+        buf.write("\2#\3\2\2\2\4\61\3\2\2\2\6\63\3\2\2\2\b9\3\2\2\2\n?\3")
+        buf.write("\2\2\2\fH\3\2\2\2\16Q\3\2\2\2\20T\3\2\2\2\22V\3\2\2\2")
+        buf.write("\24X\3\2\2\2\26Z\3\2\2\2\30e\3\2\2\2\32j\3\2\2\2\34u\3")
+        buf.write("\2\2\2\36w\3\2\2\2 y\3\2\2\2\"$\5\4\3\2#\"\3\2\2\2$%\3")
+        buf.write("\2\2\2%#\3\2\2\2%&\3\2\2\2&\'\3\2\2\2\'(\7\2\2\3(\3\3")
+        buf.write("\2\2\2)\62\5\6\4\2*\62\5\b\5\2+\62\5\n\6\2,\62\5\f\7\2")
+        buf.write("-\62\5\16\b\2.\62\5\20\t\2/\62\5\22\n\2\60\62\5\24\13")
+        buf.write("\2\61)\3\2\2\2\61*\3\2\2\2\61+\3\2\2\2\61,\3\2\2\2\61")
+        buf.write("-\3\2\2\2\61.\3\2\2\2\61/\3\2\2\2\61\60\3\2\2\2\62\5\3")
+        buf.write("\2\2\2\63\64\t\2\2\2\64\65\5\32\16\2\65\67\7\37\2\2\66")
+        buf.write("8\t\3\2\2\67\66\3\2\2\2\678\3\2\2\28\7\3\2\2\29;\7\b\2")
+        buf.write("\2:<\7\t\2\2;:\3\2\2\2;<\3\2\2\2<=\3\2\2\2=>\5\26\f\2")
+        buf.write(">\t\3\2\2\2?@\t\4\2\2@A\5\32\16\2AB\7\37\2\2BC\7\f\2\2")
+        buf.write("CF\5 \21\2DE\7\r\2\2EG\5\36\20\2FD\3\2\2\2FG\3\2\2\2G")
+        buf.write("\13\3\2\2\2HI\7\16\2\2IJ\7\17\2\2JK\7\20\2\2KL\7\f\2\2")
+        buf.write("LM\5\36\20\2MN\7\21\2\2NO\5\32\16\2OP\7\37\2\2P\r\3\2")
+        buf.write("\2\2QR\t\5\2\2RS\5\36\20\2S\17\3\2\2\2TU\7\24\2\2U\21")
+        buf.write("\3\2\2\2VW\t\6\2\2W\23\3\2\2\2XY\t\7\2\2Y\25\3\2\2\2Z")
+        buf.write("_\5\30\r\2[\\\7\"\2\2\\^\5\30\r\2][\3\2\2\2^a\3\2\2\2")
+        buf.write("_]\3\2\2\2_`\3\2\2\2`c\3\2\2\2a_\3\2\2\2bd\7\"\2\2cb\3")
+        buf.write("\2\2\2cd\3\2\2\2d\27\3\2\2\2ef\5\32\16\2fg\7\37\2\2gh")
+        buf.write("\7\f\2\2hi\5\36\20\2i\31\3\2\2\2jo\7\36\2\2kl\7\31\2\2")
+        buf.write("ln\7\36\2\2mk\3\2\2\2nq\3\2\2\2om\3\2\2\2op\3\2\2\2ps")
+        buf.write("\3\2\2\2qo\3\2\2\2rt\5\34\17\2sr\3\2\2\2st\3\2\2\2t\33")
+        buf.write("\3\2\2\2uv\t\b\2\2v\35\3\2\2\2wx\7 \2\2x\37\3\2\2\2y}")
+        buf.write("\7 \2\2z|\7 \2\2{z\3\2\2\2|\177\3\2\2\2}{\3\2\2\2}~\3")
+        buf.write("\2\2\2~!\3\2\2\2\177}\3\2\2\2\f%\61\67;F_cos}")
         return buf.getvalue()
 
 
@@ -62,19 +65,23 @@ class FinanceParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "'i have'", "'this month'", "'i want'", 
+    literalNames = [ "<INVALID>", "'i have'", "'i got'", "'i received'", 
+                     "'this month'", "'this month's salary'", "'i want'", 
                      "'to have'", "'i spent'", "'i used'", "'for'", "'in'", 
                      "'change'", "'the'", "'money'", "'to'", "'delete'", 
                      "'remove'", "'reset'", "'analyze'", "'give advice'", 
-                     "'graph'", "'show graph'", "'.'", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "','" ]
+                     "'graph'", "'show graph'", "'.'", "'million'", "'m'", 
+                     "'thousand'", "'k'", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "','" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "<INVALID>", "NUMBER", "CURRENCY", "ID", "WS", "COMMA" ]
+                      "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                      "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                      "NUMBER", "CURRENCY", "ID", "WS", "COMMA" ]
 
     RULE_start = 0
     RULE_statement = 1
@@ -89,13 +96,14 @@ class FinanceParser ( Parser ):
     RULE_categoryList = 10
     RULE_categoryItem = 11
     RULE_amount = 12
-    RULE_category = 13
-    RULE_item = 14
+    RULE_multiplier = 13
+    RULE_category = 14
+    RULE_item = 15
 
     ruleNames =  [ "start", "statement", "salaryStmt", "categoryStmt", "spendStmt", 
                    "modifyCategoryStmt", "deleteCategoryStmt", "resetStmt", 
                    "analyzeStmt", "graphStmt", "categoryList", "categoryItem", 
-                   "amount", "category", "item" ]
+                   "amount", "multiplier", "category", "item" ]
 
     EOF = Token.EOF
     T__0=1
@@ -118,11 +126,18 @@ class FinanceParser ( Parser ):
     T__17=18
     T__18=19
     T__19=20
-    NUMBER=21
-    CURRENCY=22
-    ID=23
-    WS=24
-    COMMA=25
+    T__20=21
+    T__21=22
+    T__22=23
+    T__23=24
+    T__24=25
+    T__25=26
+    T__26=27
+    NUMBER=28
+    CURRENCY=29
+    ID=30
+    WS=31
+    COMMA=32
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -171,19 +186,19 @@ class FinanceParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 31 
+            self.state = 33 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 30
+                self.state = 32
                 self.statement()
-                self.state = 33 
+                self.state = 35 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FinanceParser.T__0) | (1 << FinanceParser.T__2) | (1 << FinanceParser.T__4) | (1 << FinanceParser.T__5) | (1 << FinanceParser.T__8) | (1 << FinanceParser.T__12) | (1 << FinanceParser.T__13) | (1 << FinanceParser.T__14) | (1 << FinanceParser.T__15) | (1 << FinanceParser.T__16) | (1 << FinanceParser.T__17) | (1 << FinanceParser.T__18))) != 0)):
+                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FinanceParser.T__0) | (1 << FinanceParser.T__1) | (1 << FinanceParser.T__2) | (1 << FinanceParser.T__5) | (1 << FinanceParser.T__7) | (1 << FinanceParser.T__8) | (1 << FinanceParser.T__11) | (1 << FinanceParser.T__15) | (1 << FinanceParser.T__16) | (1 << FinanceParser.T__17) | (1 << FinanceParser.T__18) | (1 << FinanceParser.T__19) | (1 << FinanceParser.T__20) | (1 << FinanceParser.T__21))) != 0)):
                     break
 
-            self.state = 35
+            self.state = 37
             self.match(FinanceParser.EOF)
         except RecognitionException as re:
             localctx.exception = re
@@ -252,47 +267,47 @@ class FinanceParser ( Parser ):
         localctx = FinanceParser.StatementContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_statement)
         try:
-            self.state = 45
+            self.state = 47
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [FinanceParser.T__0]:
+            if token in [FinanceParser.T__0, FinanceParser.T__1, FinanceParser.T__2]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 37
+                self.state = 39
                 self.salaryStmt()
                 pass
-            elif token in [FinanceParser.T__2]:
+            elif token in [FinanceParser.T__5]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 38
+                self.state = 40
                 self.categoryStmt()
                 pass
-            elif token in [FinanceParser.T__4, FinanceParser.T__5]:
+            elif token in [FinanceParser.T__7, FinanceParser.T__8]:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 39
+                self.state = 41
                 self.spendStmt()
                 pass
-            elif token in [FinanceParser.T__8]:
+            elif token in [FinanceParser.T__11]:
                 self.enterOuterAlt(localctx, 4)
-                self.state = 40
+                self.state = 42
                 self.modifyCategoryStmt()
                 pass
-            elif token in [FinanceParser.T__12, FinanceParser.T__13]:
+            elif token in [FinanceParser.T__15, FinanceParser.T__16]:
                 self.enterOuterAlt(localctx, 5)
-                self.state = 41
+                self.state = 43
                 self.deleteCategoryStmt()
                 pass
-            elif token in [FinanceParser.T__14]:
+            elif token in [FinanceParser.T__17]:
                 self.enterOuterAlt(localctx, 6)
-                self.state = 42
+                self.state = 44
                 self.resetStmt()
                 pass
-            elif token in [FinanceParser.T__15, FinanceParser.T__16]:
+            elif token in [FinanceParser.T__18, FinanceParser.T__19]:
                 self.enterOuterAlt(localctx, 7)
-                self.state = 43
+                self.state = 45
                 self.analyzeStmt()
                 pass
-            elif token in [FinanceParser.T__17, FinanceParser.T__18]:
+            elif token in [FinanceParser.T__20, FinanceParser.T__21]:
                 self.enterOuterAlt(localctx, 8)
-                self.state = 44
+                self.state = 46
                 self.graphStmt()
                 pass
             else:
@@ -342,18 +357,28 @@ class FinanceParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 47
-            self.match(FinanceParser.T__0)
-            self.state = 48
-            self.amount()
             self.state = 49
-            self.match(FinanceParser.CURRENCY)
+            _la = self._input.LA(1)
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FinanceParser.T__0) | (1 << FinanceParser.T__1) | (1 << FinanceParser.T__2))) != 0)):
+                self._errHandler.recoverInline(self)
+            else:
+                self._errHandler.reportMatch(self)
+                self.consume()
+            self.state = 50
+            self.amount()
             self.state = 51
+            self.match(FinanceParser.CURRENCY)
+            self.state = 53
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==FinanceParser.T__1:
-                self.state = 50
-                self.match(FinanceParser.T__1)
+            if _la==FinanceParser.T__3 or _la==FinanceParser.T__4:
+                self.state = 52
+                _la = self._input.LA(1)
+                if not(_la==FinanceParser.T__3 or _la==FinanceParser.T__4):
+                    self._errHandler.recoverInline(self)
+                else:
+                    self._errHandler.reportMatch(self)
+                    self.consume()
 
 
         except RecognitionException as re:
@@ -397,17 +422,17 @@ class FinanceParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 53
-            self.match(FinanceParser.T__2)
             self.state = 55
+            self.match(FinanceParser.T__5)
+            self.state = 57
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==FinanceParser.T__3:
-                self.state = 54
-                self.match(FinanceParser.T__3)
+            if _la==FinanceParser.T__6:
+                self.state = 56
+                self.match(FinanceParser.T__6)
 
 
-            self.state = 57
+            self.state = 59
             self.categoryList()
         except RecognitionException as re:
             localctx.exception = re
@@ -461,28 +486,28 @@ class FinanceParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 59
+            self.state = 61
             _la = self._input.LA(1)
-            if not(_la==FinanceParser.T__4 or _la==FinanceParser.T__5):
+            if not(_la==FinanceParser.T__7 or _la==FinanceParser.T__8):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
                 self.consume()
-            self.state = 60
-            self.amount()
-            self.state = 61
-            self.match(FinanceParser.CURRENCY)
             self.state = 62
-            self.match(FinanceParser.T__6)
+            self.amount()
             self.state = 63
+            self.match(FinanceParser.CURRENCY)
+            self.state = 64
+            self.match(FinanceParser.T__9)
+            self.state = 65
             self.item()
-            self.state = 66
+            self.state = 68
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==FinanceParser.T__7:
-                self.state = 64
-                self.match(FinanceParser.T__7)
-                self.state = 65
+            if _la==FinanceParser.T__10:
+                self.state = 66
+                self.match(FinanceParser.T__10)
+                self.state = 67
                 self.category()
 
 
@@ -533,21 +558,21 @@ class FinanceParser ( Parser ):
         self.enterRule(localctx, 10, self.RULE_modifyCategoryStmt)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 68
-            self.match(FinanceParser.T__8)
-            self.state = 69
-            self.match(FinanceParser.T__9)
             self.state = 70
-            self.match(FinanceParser.T__10)
-            self.state = 71
-            self.match(FinanceParser.T__6)
-            self.state = 72
-            self.category()
-            self.state = 73
             self.match(FinanceParser.T__11)
+            self.state = 71
+            self.match(FinanceParser.T__12)
+            self.state = 72
+            self.match(FinanceParser.T__13)
+            self.state = 73
+            self.match(FinanceParser.T__9)
             self.state = 74
-            self.amount()
+            self.category()
             self.state = 75
+            self.match(FinanceParser.T__14)
+            self.state = 76
+            self.amount()
+            self.state = 77
             self.match(FinanceParser.CURRENCY)
         except RecognitionException as re:
             localctx.exception = re
@@ -590,14 +615,14 @@ class FinanceParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 77
+            self.state = 79
             _la = self._input.LA(1)
-            if not(_la==FinanceParser.T__12 or _la==FinanceParser.T__13):
+            if not(_la==FinanceParser.T__15 or _la==FinanceParser.T__16):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
                 self.consume()
-            self.state = 78
+            self.state = 80
             self.category()
         except RecognitionException as re:
             localctx.exception = re
@@ -636,8 +661,8 @@ class FinanceParser ( Parser ):
         self.enterRule(localctx, 14, self.RULE_resetStmt)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 80
-            self.match(FinanceParser.T__14)
+            self.state = 82
+            self.match(FinanceParser.T__17)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -676,9 +701,9 @@ class FinanceParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 82
+            self.state = 84
             _la = self._input.LA(1)
-            if not(_la==FinanceParser.T__15 or _la==FinanceParser.T__16):
+            if not(_la==FinanceParser.T__18 or _la==FinanceParser.T__19):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -721,9 +746,9 @@ class FinanceParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 84
+            self.state = 86
             _la = self._input.LA(1)
-            if not(_la==FinanceParser.T__17 or _la==FinanceParser.T__18):
+            if not(_la==FinanceParser.T__20 or _la==FinanceParser.T__21):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -778,26 +803,26 @@ class FinanceParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 86
+            self.state = 88
             self.categoryItem()
-            self.state = 91
+            self.state = 93
             self._errHandler.sync(self)
             _alt = self._interp.adaptivePredict(self._input,5,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1:
-                    self.state = 87
+                    self.state = 89
                     self.match(FinanceParser.COMMA)
-                    self.state = 88
+                    self.state = 90
                     self.categoryItem() 
-                self.state = 93
+                self.state = 95
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,5,self._ctx)
 
-            self.state = 95
+            self.state = 97
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==FinanceParser.COMMA:
-                self.state = 94
+                self.state = 96
                 self.match(FinanceParser.COMMA)
 
 
@@ -848,13 +873,13 @@ class FinanceParser ( Parser ):
         self.enterRule(localctx, 22, self.RULE_categoryItem)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 97
-            self.amount()
-            self.state = 98
-            self.match(FinanceParser.CURRENCY)
             self.state = 99
-            self.match(FinanceParser.T__6)
+            self.amount()
             self.state = 100
+            self.match(FinanceParser.CURRENCY)
+            self.state = 101
+            self.match(FinanceParser.T__9)
+            self.state = 102
             self.category()
         except RecognitionException as re:
             localctx.exception = re
@@ -878,6 +903,10 @@ class FinanceParser ( Parser ):
             else:
                 return self.getToken(FinanceParser.NUMBER, i)
 
+        def multiplier(self):
+            return self.getTypedRuleContext(FinanceParser.MultiplierContext,0)
+
+
         def getRuleIndex(self):
             return FinanceParser.RULE_amount
 
@@ -899,20 +928,73 @@ class FinanceParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 102
+            self.state = 104
             self.match(FinanceParser.NUMBER)
-            self.state = 107
+            self.state = 109
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==FinanceParser.T__19:
-                self.state = 103
-                self.match(FinanceParser.T__19)
-                self.state = 104
+            while _la==FinanceParser.T__22:
+                self.state = 105
+                self.match(FinanceParser.T__22)
+                self.state = 106
                 self.match(FinanceParser.NUMBER)
-                self.state = 109
+                self.state = 111
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
+            self.state = 113
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FinanceParser.T__23) | (1 << FinanceParser.T__24) | (1 << FinanceParser.T__25) | (1 << FinanceParser.T__26))) != 0):
+                self.state = 112
+                self.multiplier()
+
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class MultiplierContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+
+        def getRuleIndex(self):
+            return FinanceParser.RULE_multiplier
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterMultiplier" ):
+                listener.enterMultiplier(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitMultiplier" ):
+                listener.exitMultiplier(self)
+
+
+
+
+    def multiplier(self):
+
+        localctx = FinanceParser.MultiplierContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 26, self.RULE_multiplier)
+        self._la = 0 # Token type
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 115
+            _la = self._input.LA(1)
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << FinanceParser.T__23) | (1 << FinanceParser.T__24) | (1 << FinanceParser.T__25) | (1 << FinanceParser.T__26))) != 0)):
+                self._errHandler.recoverInline(self)
+            else:
+                self._errHandler.reportMatch(self)
+                self.consume()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -949,10 +1031,10 @@ class FinanceParser ( Parser ):
     def category(self):
 
         localctx = FinanceParser.CategoryContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 26, self.RULE_category)
+        self.enterRule(localctx, 28, self.RULE_category)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 110
+            self.state = 117
             self.match(FinanceParser.ID)
         except RecognitionException as re:
             localctx.exception = re
@@ -993,19 +1075,19 @@ class FinanceParser ( Parser ):
     def item(self):
 
         localctx = FinanceParser.ItemContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 28, self.RULE_item)
+        self.enterRule(localctx, 30, self.RULE_item)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 112
+            self.state = 119
             self.match(FinanceParser.ID)
-            self.state = 116
+            self.state = 123
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==FinanceParser.ID:
-                self.state = 113
+                self.state = 120
                 self.match(FinanceParser.ID)
-                self.state = 118
+                self.state = 125
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
