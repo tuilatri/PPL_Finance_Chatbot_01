@@ -20,6 +20,7 @@
 This repository implements a **Finance Chatbot** that uses **ANTLR4** for grammar parsing and **Python** for handling user interactions, currency conversion, spending analysis, and visualization.
 
 **Responsibilities:**
+- Nguyễn Anh Trí - ITCSIU22152
 - Hà Minh Trí – ITCSIU22194  
 - Đỗ Hùng Việt – ITCSIU22197  
 
@@ -131,6 +132,8 @@ exit
 ### 1. Requirements
 - Python 3.12.10  
 - ANTLR4 4.9.2  
+- SQLite
+- Java JDK
 - Files in the `requirements` folder
 
 ### 2. Clone the Project
@@ -149,9 +152,22 @@ git clone https://github.com/tuilatri/PPL_Finance_Chatbot_01.git
 
 ```
 
+### 5. Add Hugging Face Token
+- Get your token via: [Hugging Face](https://huggingface.co/settings/tokens)
+
+
+```bash
+$Env:HF_TOKEN = "HF_TOKEN" (replace HF_TOKEN with yours)
+deactivate
+.\venv\Scripts\Activate.ps1
+echo $Env:HF_TOKEN
+
+
+```
+
 ### 5. Install Dependencies
 ```bash
-python -m pip install spacy==3.8.2 antlr4-python3-runtime==4.9.2
+python -m pip install spacy==3.8.2 antlr4-python3-runtime==4.9.2 flask
 python -m spacy download en_core_web_sm
 python -m pip install matplotlib
 
@@ -163,10 +179,15 @@ python -m pip list
 
 ```
 
-### 7. Run the Chatbot
+### 7. Generate the antlr4 (if not)
 ```bash
 python run.py gen
-python run.py test
+
+```
+
+### 8. Run the program
+```bash
+python server.py
 
 ```
 
