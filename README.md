@@ -22,7 +22,8 @@ This repository implements a **Finance Chatbot** that uses **ANTLR4** for gramma
 **Responsibilities:**
 - Nguyễn Anh Trí - ITCSIU22152
 - Hà Minh Trí – ITCSIU22194  
-- Đỗ Hùng Việt – ITCSIU22197  
+- Đỗ Hùng Việt – ITCSIU22197
+- Phan Đức Trí - ITCSIU22151
 
 ---
 
