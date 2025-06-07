@@ -168,7 +168,7 @@ echo $Env:HF_TOKEN
 
 ### 5. Install Dependencies
 ```bash
-python -m pip install spacy==3.8.2 antlr4-python3-runtime==4.9.2 flask
+python -m pip install spacy==3.8.2 antlr4-python3-runtime==4.9.2 flask huggingface_hub
 python -m spacy download en_core_web_sm
 python -m pip install matplotlib
 
