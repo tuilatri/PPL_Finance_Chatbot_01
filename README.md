@@ -140,23 +140,23 @@ exit
 ### 2. Create a folder named CompiledFiles
 ![Folder Structure](images/folder_structure.png)
 
-### 2. Clone the Project
+### 3. Clone the Project
 ```bash
 git clone https://github.com/tuilatri/PPL_Finance_Chatbot_01.git
 ```
 
-### 3. Create Virtual Environment
+### 4. Create Virtual Environment
 ```bash
 <path_to_python>\python.exe -m venv venv
 ```
 
-### 4. Activate Environment
+### 5. Activate Environment
 ```bash
 .\venv\Scripts\Activate.ps1
 
 ```
 
-### 5. Add Hugging Face Token
+### 6. Add Hugging Face Token
 - Get your token via: [Hugging Face](https://huggingface.co/settings/tokens)
 
 
@@ -169,7 +169,7 @@ echo $Env:HF_TOKEN
 
 ```
 
-### 6. Install Dependencies
+### 7. Install Dependencies
 ```bash
 python -m pip install spacy==3.8.2 antlr4-python3-runtime==4.9.2 flask huggingface_hub
 python -m spacy download en_core_web_sm
@@ -177,19 +177,19 @@ python -m pip install matplotlib
 
 ```
 
-### 7. Verify Installation
+### 8. Verify Installation
 ```bash
 python -m pip list
 
 ```
 
-### 8. Generate the antlr4 (if not)
+### 9. Generate the antlr4 (if not)
 ```bash
 python run.py gen
 
 ```
 
-### 9. Run the program
+### 10. Run the program
 ```bash
 python server.py
 
