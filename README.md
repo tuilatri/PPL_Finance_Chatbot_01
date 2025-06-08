@@ -137,6 +137,9 @@ exit
 - Java JDK
 - Files in the `requirements` folder
 
+### 2. Create a folder named CompiledFiles
+![Folder Structure](images/folder_structure.png)
+
 ### 2. Clone the Project
 ```bash
 git clone https://github.com/tuilatri/PPL_Finance_Chatbot_01.git
@@ -166,7 +169,7 @@ echo $Env:HF_TOKEN
 
 ```
 
-### 5. Install Dependencies
+### 6. Install Dependencies
 ```bash
 python -m pip install spacy==3.8.2 antlr4-python3-runtime==4.9.2 flask huggingface_hub
 python -m spacy download en_core_web_sm
@@ -174,19 +177,19 @@ python -m pip install matplotlib
 
 ```
 
-### 6. Verify Installation
+### 7. Verify Installation
 ```bash
 python -m pip list
 
 ```
 
-### 7. Generate the antlr4 (if not)
+### 8. Generate the antlr4 (if not)
 ```bash
 python run.py gen
 
 ```
 
-### 8. Run the program
+### 9. Run the program
 ```bash
 python server.py
 
