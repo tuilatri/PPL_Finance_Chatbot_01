@@ -233,7 +233,7 @@ def process_input():
                         "i want 2000000 vnd for food, 1000000 vnd for emergency",
                         "i spent 50000 vnd for pho in food",
                         "change the money for food to 2500000 vnd",
-                        "delete category food",
+                        "delete food category",
                         "analyze",
                         "graph",
                         "reset"
